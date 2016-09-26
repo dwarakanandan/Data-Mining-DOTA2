@@ -4,11 +4,11 @@ var match_id = process.argv[current];
 var config_file = process.argv[2];
 
 
-var steam = require("./lib/node-dota2/node_modules/steam"),
+var steam = require("../../plugins/node-dota2/node_modules/steam"),
 		util = require("util"),
 		fs = require("fs"),
 		crypto = require("crypto"),
-		dota2 = require("./lib/node-dota2"),
+		dota2 = require("../../plugins/node-dota2"),
 		steamClient = new steam.SteamClient(),
 		steamUser = new steam.SteamUser(steamClient),
 		steamFriends = new steam.SteamFriends(steamClient),

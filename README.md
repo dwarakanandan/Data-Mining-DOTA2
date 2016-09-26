@@ -23,6 +23,7 @@ collected as the game progresses.
 	* Run the jar file, this analyzes each replay file and extracts a relevant set of attributes.These are stored in a Sqlite3 database file named
 	  dota2.db.
 	* This database file is used as the prime data source for subsequent steps in our project.
+
 ## Motivation
 
 This project is being developed as part of the curriculum for 8th semester under Visvesvaraya Technological University.

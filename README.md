@@ -15,7 +15,7 @@ collected as the game progresses.
 	* Run the extract.py to validate the replays and extract these bz2 files to actual game demo files (*.dem) all located in a resources folder.
  
 * Data Extraction :
-	* REQUIREMENTS - Java , Maven
+	* REQUIREMENTS - Java , Maven , Sqlite 3+
 	* This step involves extracting data from the demo files and building a Sqlite database to store all relevant
 	  attributes of the game. Code base written in Java. A plugin called Clarity 2 was used to extract raw data from the replay files 	  	  [https://github.com/skadistats/clarity].
 	* Compile the Maven project in data_extraction using $mvn package.

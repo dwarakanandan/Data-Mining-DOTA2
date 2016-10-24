@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 public class Main {
 	
 	static PlayerDatabase playerDatabase;
+	static int g_count;
 	
 	public static void main(String[] args) throws Exception {
 		playerDatabase = new PlayerDatabase();
@@ -17,6 +18,7 @@ public class Main {
 		File[] listOfFiles = folder.listFiles();
 		for(File f:listOfFiles){
 			try{
+				g_count++;
 				processMatch(f.getName());
 			}
 			catch(Exception e){
@@ -30,15 +32,15 @@ public class Main {
 		String match_id = fName.split("[.]")[0].split("_")[0];
 		if(!playerDatabase.exists(match_id))
 		{
-			System.out.println("Processing match "+match_id+" ...");
+			System.out.println(g_count+":Processing match "+match_id+" ...");
 			Replay replay = new Replay("replays_dem/"+fName);
-			int first_tick = 2;
+			int first_tick = 4500;
 			while(replay.getPrimaryRune()==16777215)replay.seek(first_tick++);
 			int last_tick = 30*1800+first_tick;
-			first_tick = first_tick+5*1800;
+			first_tick = first_tick+1800;
 			replay.seek(first_tick);
 			insertMatchDetails(match_id,replay);
-			int current_minute = 4;
+			int current_minute = 0;
 			for(int t=first_tick;t<=last_tick;t+=1800)
 			{
 				replay.seek(t);

@@ -19,6 +19,11 @@ class PlayerDatabase{
 				createDatabase();
 			}
 			c.setAutoCommit(false);
+			Statement stmt = c.createStatement();;
+			stmt.executeUpdate("delete from match_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
+			stmt.executeUpdate("delete from player_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
+			stmt.close();
+			c.commit();
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
@@ -98,6 +103,7 @@ class PlayerDatabase{
 									+ rawStatement + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
+			c.commit();
 		}catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
@@ -112,17 +118,8 @@ class PlayerDatabase{
 			ResultSet rs = stmt.executeQuery( "SELECT COUNT(*) AS NUM_ROWS FROM MATCH_DATA WHERE MATCH_ID = "+match_id+";" );
 			if(rs.getInt("NUM_ROWS")==0)
 				rval = false;
-			else{
-				rs = stmt.executeQuery( "SELECT COUNT(*) AS NUM_ROWS FROM PLAYER_DATA WHERE MATCH_ID = "+match_id+";" );
-				if(rs.getInt("NUM_ROWS")!=26){
-					rval = false;
-					stmt.executeUpdate("DELETE FROM MATCH_DATA WHERE MATCH_ID = "+match_id);
-					stmt.executeUpdate("DELETE FROM PLAYER_DATA WHERE MATCH_ID = "+match_id);
-				}
-			}
 			rs.close();
 			stmt.close();
-			c.commit();
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);

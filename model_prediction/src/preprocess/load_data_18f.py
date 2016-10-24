@@ -9,7 +9,7 @@ def getMatchOutcome(match_id,connection):
 		return 1
 
 def load(time_elapsed):
-	connection = sqlite3.connect("../../data/dota2.db")
+	connection = sqlite3.connect("../../../../resources/dota2.db")
 	query = connection.execute("SELECT * FROM PLAYER_DATA WHERE TIME_ELAPSED="+str(time_elapsed)).fetchall()
 	features = []
 	lables  = []

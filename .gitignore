@@ -47,4 +47,5 @@ Temporary Items
 .apdisk
 
 # My additions
+data_extraction/Dota2-Parser/target
 model_prediction/cache

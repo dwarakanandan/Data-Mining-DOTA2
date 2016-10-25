@@ -48,4 +48,4 @@ Temporary Items
 
 # My additions
 data_extraction/Dota2-Parser/target
-model_prediction/cache
+model/cache

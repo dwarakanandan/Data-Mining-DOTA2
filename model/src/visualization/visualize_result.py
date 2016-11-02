@@ -13,7 +13,7 @@ def plot(fname,color):
 		game_time+=1
 	plt.plot(x,y_lr,label=fname.split("_")[-1],color=color)
 
-
-plot("algorithm_tune_lr_90f","g")
+plot("algorithm_tune_lr_18f","g")
+plot("algorithm_tune_lr_90f","r")
 plt.legend(loc=2)
 plt.show()

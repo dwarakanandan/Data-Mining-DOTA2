@@ -6,16 +6,18 @@ import java.io.File;
 class PlayerDatabase{
 	
 	Connection c;
+	String databaseName;
 	
-	PlayerDatabase(){
+	PlayerDatabase(String databaseName){
+		this.databaseName = databaseName;
 		try {
-			File file = new File("dota2.db");
+			File file = new File(databaseName);
 			Class.forName("org.sqlite.JDBC");
-			System.out.println("Checking for database file dota2.db...");
+			System.out.println("Checking for database file "+databaseName+"...");
 			if(file.exists())
-				c = DriverManager.getConnection("jdbc:sqlite:dota2.db");
+				c = DriverManager.getConnection("jdbc:sqlite:"+databaseName);
 			else{
-				c = DriverManager.getConnection("jdbc:sqlite:dota2.db");
+				c = DriverManager.getConnection("jdbc:sqlite:"+databaseName);
 				createDatabase();
 			}
 			c.setAutoCommit(false);
@@ -28,7 +30,7 @@ class PlayerDatabase{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		System.out.println("Opened database successfully");
+		System.out.println("Opened database "+databaseName+" successfully");
 	}
 	
 	public void closeConnection(){
@@ -38,7 +40,7 @@ class PlayerDatabase{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		System.out.println("Database closed successfully");
+		System.out.println("Database "+databaseName+" close successfully");
 	}
 	
 	public void createDatabase(){

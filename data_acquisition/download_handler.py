@@ -1,3 +1,4 @@
+import threading
 import os
 import urllib2
 import json
@@ -5,16 +6,30 @@ import sys
 import time
 import requests
 
-def downloadFile(url, directory) :
+NUM_THREADS = 4
+BROKEN_THRESHOLD = 15
+
+class myThread (threading.Thread):
+		def __init__(self, threadID,urlList):
+				threading.Thread.__init__(self)
+				self.threadID = str(threadID)
+				self.urlList = urlList
+		def run(self):
+				print "Starting Thread "+self.threadID+"\n",
+				for url in self.urlList:
+					print "[Thread "+self.threadID+"]"+"Downloading "+url+"\n",
+					downloadFile(url,self.threadID)
+				print "Exiting Thread "+self.threadID+"\n",
+
+def downloadFile(url,threadID):
 	localFilename = url.split('/')[-1]
-	with open(directory + '/' + localFilename, 'wb') as f:
+	with open("../../resources/replays"+ '/' + localFilename, 'wb') as f:
 		start = time.clock()
 		r = requests.get(url, stream=True)
 		total_length = int(r.headers.get('content-length'))
 		if total_length==0:
-			print "  Time Out!"
+			print "[Thread "+threadID+"]"+" Time Out!"+"\n",
 			return
-		print " Size:"+str(total_length/(1024*1024))+"MB"
 		dl = 0
 		if total_length is None:
 			f.write(r.content)
@@ -24,29 +39,31 @@ def downloadFile(url, directory) :
 				f.write(chunk)
 				done = int(50 * dl / total_length)
 				if (time.clock()-start) > 10:
-					if ((dl//(time.clock() - start))/(1024)) < 15:
-						print "Broken URL"
+					if ((dl//(time.clock() - start))/(1024)) < BROKEN_THRESHOLD:
+						print "[Thread "+threadID+"]"+"Broken URL"+"\n",
 						return
-				sys.stdout.write("\r[%s%s] %04d KB/s" % ('=' * done, ' ' * (50-done), (dl//(time.clock() - start))/(1024))),
-	print ""
-
 
 files =  os.listdir("../../resources/match_details")
+urls = []
 for f in files:
 	match_id = f.split(".")[0]
 	json_obj = json.load(open("../../resources/match_details/"+f,"r"))
 	replay_salt =  json_obj['match']['replay_salt']
 	cluster = json_obj['match']['cluster']
 	if os.path.exists("../../resources/replays/"+match_id+"_"+str(replay_salt)+".dem.bz2")==False:
-		print "Downloading  "+f,
 		url = "http://replay"+str(cluster)+".valve.net/570/"+match_id+"_"+str(replay_salt)+".dem.bz2";
-		print url,
-		downloadFile(url,"../../resources/replays")
+		urls.append(url)
 
-#clean broken links
-files = os.listdir("../../resources/replays")
-for f in files:
-	if os.path.getsize("../../resources/replays/"+f)<10000000:
-		os.remove("../../resources/replays/"+f)
-		match_id = f.split(".")[0].split("_")[0]
-		os.remove("../../resources/match_details/"+match_id+".json")
+
+urlList = [urls[i::NUM_THREADS] for i in range(NUM_THREADS)]
+
+threads = []
+for i in range(0,NUM_THREADS):
+	thread = myThread(i,urlList[i])
+	thread.start()
+	threads.append(thread)
+
+for t in threads:
+    t.join()
+
+print "Exiting Main Thread"

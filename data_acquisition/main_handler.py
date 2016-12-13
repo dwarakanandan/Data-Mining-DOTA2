@@ -8,7 +8,7 @@ def get_match_details(match_id):
 	json_obj = json.loads(string)
 	return json_obj
 
-NUM_REPLAYS_TO_DOWNLOAD = 100
+NUM_REPLAYS_TO_DOWNLOAD = 15
 CONFIG_FILE = "./config/dwaraka0072_config"
 
 match_ids = []

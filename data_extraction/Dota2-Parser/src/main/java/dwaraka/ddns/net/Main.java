@@ -35,7 +35,7 @@ public class Main {
 			System.out.println(g_count+":Processing match "+match_id+" ...");
 			Replay replay = new Replay("replays_dem/"+fName);
 			int first_tick = 4500;
-			while(replay.getPrimaryRune()==16777215)replay.seek(first_tick++);
+			while(replay.getBountyRune_1()==16777215)replay.seek(first_tick++);
 			int last_tick = 30*1800+first_tick;
 			first_tick = first_tick+1800;
 			replay.seek(first_tick);

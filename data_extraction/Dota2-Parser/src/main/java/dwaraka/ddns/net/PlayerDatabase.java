@@ -130,24 +130,20 @@ class PlayerDatabase{
 	private String getCreateStatement(){
 		String createStatement = "";
 		for(int i=0;i<10;i++){
-			String partialCreateStatement = " PLAYER_"+Integer.toString(i)+"_AGILITY REAL," +
+			String partialCreateStatement =
 									 " PLAYER_"+Integer.toString(i)+"_ASSISTS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_CAMPS_STACKED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_DEATHS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_DENY_COUNT INT," +
 									 " PLAYER_"+Integer.toString(i)+"_HEALING REAL," +
-									 " PLAYER_"+Integer.toString(i)+"_INTELLECT REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_KILLS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_LAST_HIT_COUNT INT," +
 									 " PLAYER_"+Integer.toString(i)+"_LEVEL INT," +
-									 " PLAYER_"+Integer.toString(i)+"_MAX_HEALTH INT," +
-									 " PLAYER_"+Integer.toString(i)+"_MAX_MANA REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_NET_WORTH INT," +
 									 " PLAYER_"+Integer.toString(i)+"_OBSERVER_WARDS_PLACED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_ROSHAN_KILLS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_RUNE_PICKUPS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_SENTRY_WARDS_PLACED INT," +
-									 " PLAYER_"+Integer.toString(i)+"_STRENGTH REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_STUN_DURATION REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_TOTAL_GOLD_EARNED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_TOTAL_XP_EARNED INT," +

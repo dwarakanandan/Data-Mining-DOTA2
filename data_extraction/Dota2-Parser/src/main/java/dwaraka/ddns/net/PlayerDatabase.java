@@ -2,6 +2,7 @@ package dwaraka.ddns.net;
 
 import java.sql.*;
 import java.io.File;
+import java.util.ArrayList;
 
 class PlayerDatabase{
 	
@@ -112,6 +113,7 @@ class PlayerDatabase{
 		}
 	}
 	
+	/*
 	public boolean exists(String match_id){
 		boolean rval = true;
 		Statement stmt = null;
@@ -127,6 +129,22 @@ class PlayerDatabase{
 			System.exit(0);
 		}
 		return rval;
+	}
+	*/
+	
+	public ArrayList<Long> getMatchIds(){
+		ArrayList<Long> matchIds = new ArrayList<Long>();
+		try{
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery( "SELECT * FROM MATCH_DATA");
+			while(rs.next())
+				matchIds.add(rs.getLong("MATCH_ID"));
+			stmt.close();
+		}catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+		return matchIds;
 	}
 	
 	private String getCreateStatement(){

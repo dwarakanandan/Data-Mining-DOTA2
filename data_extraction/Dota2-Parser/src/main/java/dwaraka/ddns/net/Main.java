@@ -31,10 +31,12 @@ public class Main {
 			count = (count+1)%4;
 		}
 		PlayerDatabase playerDatabase = new PlayerDatabase("dota2.db");
-		WorkerThread worker0 = new WorkerThread("0",list0,playerDatabase);
-		WorkerThread worker1 = new WorkerThread("1",list1,playerDatabase);
-		WorkerThread worker2 = new WorkerThread("2",list2,playerDatabase);
-		WorkerThread worker3 = new WorkerThread("3",list3,playerDatabase);
+		ArrayList<Long> matchIds = playerDatabase.getMatchIds();
+		playerDatabase.closeConnection();
+		WorkerThread worker0 = new WorkerThread("0",list0,matchIds);
+		WorkerThread worker1 = new WorkerThread("1",list1,matchIds);
+		WorkerThread worker2 = new WorkerThread("2",list2,matchIds);
+		WorkerThread worker3 = new WorkerThread("3",list3,matchIds);
 		try{
 			worker0.t.join();
 			worker1.t.join();
@@ -43,6 +45,5 @@ public class Main {
 		}catch(InterruptedException e){
 			System.out.println("Main interrupted");
 		}
-		playerDatabase.closeConnection();
 	}
 }

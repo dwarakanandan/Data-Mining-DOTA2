@@ -10,16 +10,16 @@ import org.json.simple.parser.JSONParser;
 
 class WorkerThread implements Runnable{
 	Thread t;
-	PlayerDatabase mainDatabase;
 	PlayerDatabase playerDatabase;
 	ArrayList<String> listOfFiles;
+	ArrayList<Long> matchIds;
 	String threadID;
 	
-	WorkerThread(String threadID,ArrayList<String> listOfFiles,PlayerDatabase mainDatabase){
+	WorkerThread(String threadID,ArrayList<String> listOfFiles,ArrayList<Long> matchIds){
 		t = new Thread(this,threadID);
 		this.listOfFiles = listOfFiles;
 		this.threadID = threadID;
-		this.mainDatabase = mainDatabase;
+		this.matchIds = matchIds;
 		t.start();
 	}
 	
@@ -42,9 +42,17 @@ class WorkerThread implements Runnable{
 		}
 	}
 	
+	private boolean exists(String match_id){
+		Long matchId = Long.parseLong(match_id);
+		for(Long i:matchIds)
+			if(i==matchId)
+				return true;
+		return false;
+	}
+	
 	private void processMatch(String fName) throws Exception{
 		String match_id = fName.split("[.]")[0].split("_")[0];
-		if(!mainDatabase.exists(match_id))
+		if(!exists(match_id))
 		{
 			System.out.println("[Thread "+threadID+"]"+":Processing match "+match_id+" ...");
 			Replay replay = new Replay("replays_dem/"+fName);

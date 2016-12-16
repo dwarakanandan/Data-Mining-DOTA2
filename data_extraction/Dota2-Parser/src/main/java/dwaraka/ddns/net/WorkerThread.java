@@ -49,7 +49,10 @@ class WorkerThread implements Runnable{
 			System.out.println("[Thread "+threadID+"]"+":Processing match "+match_id+" ...");
 			Replay replay = new Replay("replays_dem/"+fName);
 			int first_tick = 4500;
-			while(replay.getBountyRune_1()==16777215)replay.seek(first_tick++);
+			if(Long.parseLong(match_id)>=2842495294L)
+				while(replay.getBountyRune_1()==16777215)replay.seek(first_tick++);
+			else
+				while(replay.getPrimaryRune()==16777215)replay.seek(first_tick++);
 			int last_tick = 30*1800+first_tick;
 			first_tick = first_tick+1800;
 			replay.seek(first_tick);

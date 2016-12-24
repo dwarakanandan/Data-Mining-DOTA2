@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
-	
+
 	public static void main(String[] args) throws Exception {
 		File folder = new File("replays_dem");
 		File[] listOfFiles = folder.listFiles();
@@ -32,6 +32,7 @@ public class Main {
 		}
 		PlayerDatabase playerDatabase = new PlayerDatabase("dota2.db");
 		ArrayList<Long> matchIds = playerDatabase.getMatchIds();
+		System.out.println("Number of matchIds found = "+matchIds.size());
 		playerDatabase.closeConnection();
 		WorkerThread worker0 = new WorkerThread("0",list0,matchIds);
 		WorkerThread worker1 = new WorkerThread("1",list1,matchIds);

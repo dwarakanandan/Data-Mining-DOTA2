@@ -5,10 +5,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 class PlayerDatabase{
-	
+
 	Connection c;
 	String databaseName;
-	
+
 	PlayerDatabase(String databaseName){
 		this.databaseName = databaseName;
 		try {
@@ -22,7 +22,7 @@ class PlayerDatabase{
 				createDatabase();
 			}
 			c.setAutoCommit(false);
-			Statement stmt = c.createStatement();;
+			Statement stmt = c.createStatement();
 			stmt.executeUpdate("delete from match_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
 			stmt.executeUpdate("delete from player_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
 			stmt.close();
@@ -33,7 +33,7 @@ class PlayerDatabase{
 		}
 		System.out.println("Opened database "+databaseName+" successfully");
 	}
-	
+
 	public void closeConnection(){
 		try {
 			c.close();
@@ -43,7 +43,7 @@ class PlayerDatabase{
 		}
 		System.out.println("Database "+databaseName+" close successfully");
 	}
-	
+
 	public void createDatabase(){
 		Statement stmt = null;
 		try {
@@ -79,11 +79,11 @@ class PlayerDatabase{
 			System.exit(0);
 		}
 	}
-	
+
 	public void insertPlayerData(String match_id,int time,String rawStatement){
 		Statement stmt = null;
 		try{
-			
+
 			stmt = c.createStatement();
 			String sql = "INSERT INTO PLAYER_DATA VALUES("
 									+ match_id +","+Integer.toString(time)+","
@@ -96,7 +96,7 @@ class PlayerDatabase{
 			System.exit(0);
 		}
 	}
-	
+
 	public void insertMatchData(String rawStatement){
 		Statement stmt = null;
 		try{
@@ -112,7 +112,7 @@ class PlayerDatabase{
 			System.exit(0);
 		}
 	}
-	
+
 	/*
 	public boolean exists(String match_id){
 		boolean rval = true;
@@ -131,7 +131,7 @@ class PlayerDatabase{
 		return rval;
 	}
 	*/
-	
+
 	public ArrayList<Long> getMatchIds(){
 		ArrayList<Long> matchIds = new ArrayList<Long>();
 		try{
@@ -146,7 +146,7 @@ class PlayerDatabase{
 		}
 		return matchIds;
 	}
-	
+
 	private String getCreateStatement(){
 		String createStatement = "";
 		for(int i=0;i<10;i++){

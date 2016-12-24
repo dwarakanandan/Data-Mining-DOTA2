@@ -14,21 +14,26 @@ class WorkerThread implements Runnable{
 	ArrayList<String> listOfFiles;
 	ArrayList<Long> matchIds;
 	String threadID;
-	
+	int num;
+	int max;
+
 	WorkerThread(String threadID,ArrayList<String> listOfFiles,ArrayList<Long> matchIds){
 		t = new Thread(this,threadID);
 		this.listOfFiles = listOfFiles;
 		this.threadID = threadID;
 		this.matchIds = matchIds;
+		max = listOfFiles.size();
+		num = 0;
 		t.start();
 	}
-	
+
 	public void run(){
 		try{
 			playerDatabase = new PlayerDatabase("dota2_"+threadID+".db");
 			for(String s:listOfFiles){
 				File f = new File("replays_dem/"+s);
 				try{
+					num++;
 					processMatch(f.getName());
 				}
 				catch(Exception e){
@@ -38,23 +43,27 @@ class WorkerThread implements Runnable{
 			playerDatabase.closeConnection();
 		}
 		catch(Exception e){
-			
+
 		}
 	}
-	
+
 	private boolean exists(String match_id){
 		Long matchId = Long.parseLong(match_id);
 		for(Long i:matchIds)
-			if(i==matchId)
+		{
+			if(i.longValue()==matchId.longValue())
+			{
 				return true;
+			}
+		}
 		return false;
 	}
-	
+
 	private void processMatch(String fName) throws Exception{
 		String match_id = fName.split("[.]")[0].split("_")[0];
 		if(!exists(match_id))
 		{
-			System.out.println("[Thread "+threadID+"]"+":Processing match "+match_id+" ...");
+			System.out.println("[Thread "+threadID+"]"+"["+(max-num)+"]"+":Processing match "+match_id+"...");
 			Replay replay = new Replay("replays_dem/"+fName);
 			int first_tick = 4500;
 			if(Long.parseLong(match_id)>=2842495294L)
@@ -75,7 +84,7 @@ class WorkerThread implements Runnable{
 			replay.stop();
 		}
 	}
-	
+
 	private void cleanUp(String fName) throws Exception{
 		String match_id_replay_salt = fName.split("[.]")[0];
 		new File("replays_dem/"+match_id_replay_salt+".dem").delete();
@@ -83,7 +92,7 @@ class WorkerThread implements Runnable{
 		new File("match_details/"+match_id_replay_salt.split("_")[0]+".json").delete();
 		System.out.println("[Thread "+threadID+"]"+":Deleted corrupt replay "+match_id_replay_salt);
 	}
-	
+
 	private void insertMatchDetails(String match_id,Replay replay)throws Exception{
 		JSONParser parser = new JSONParser();
 		FileReader fileReader = new FileReader("match_details/"+match_id+".json");

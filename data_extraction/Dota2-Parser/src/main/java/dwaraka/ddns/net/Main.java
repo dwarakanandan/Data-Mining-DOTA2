@@ -38,6 +38,7 @@ public class Main {
 		WorkerThread worker1 = new WorkerThread("1",list1,matchIds);
 		WorkerThread worker2 = new WorkerThread("2",list2,matchIds);
 		WorkerThread worker3 = new WorkerThread("3",list3,matchIds);
+		final long startTime = System.currentTimeMillis();
 		try{
 			worker0.t.join();
 			worker1.t.join();
@@ -46,5 +47,7 @@ public class Main {
 		}catch(InterruptedException e){
 			System.out.println("Main interrupted");
 		}
+		final long endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime) );
 	}
 }

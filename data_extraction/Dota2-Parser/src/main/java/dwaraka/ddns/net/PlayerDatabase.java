@@ -90,7 +90,7 @@ class PlayerDatabase{
 									+ rawStatement + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.commit();
+			//c.commit();
 		}catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
@@ -106,12 +106,21 @@ class PlayerDatabase{
 									+ rawStatement + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.commit();
+			//c.commit();
 		}catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
 	}
+
+  public void performCommit(){
+    try{
+      c.commit();
+    }catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+  }
 
 	/*
 	public boolean exists(String match_id){

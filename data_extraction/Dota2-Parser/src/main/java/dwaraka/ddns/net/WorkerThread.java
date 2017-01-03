@@ -35,11 +35,14 @@ class WorkerThread implements Runnable{
 				try{
 					num++;
 					processMatch(f.getName());
+					if((num%2)==0)
+						playerDatabase.performCommit();
 				}
 				catch(Exception e){
 					cleanUp(f.getName());
 				}
 			}
+			playerDatabase.performCommit();
 			playerDatabase.closeConnection();
 		}
 		catch(Exception e){

@@ -9,7 +9,7 @@ def get_match_details(match_id):
 	return json_obj
 
 NUM_REPLAYS_TO_DOWNLOAD = 100
-CONFIG_FILE = "./config/dwaraka0072_config"
+CONFIG_FILE = "./config/dwaraka0071_config"
 
 match_ids = []
 duration_list = []
@@ -32,7 +32,7 @@ while num<= NUM_REPLAYS_TO_DOWNLOAD:
 	if len(matches)!=100:
 		break
 	previous_matchid = str(matches[99]['match_id'])
-	
+
 	for i in range(0,100):
 		if num<=NUM_REPLAYS_TO_DOWNLOAD:
 			match_id = matches[i]['match_id']

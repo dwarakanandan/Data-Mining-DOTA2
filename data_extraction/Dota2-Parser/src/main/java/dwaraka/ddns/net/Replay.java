@@ -27,12 +27,12 @@ import java.io.InputStreamReader;
 class Replay{
 	private final ControllableRunner runner;
 
-	public Replay(String fileName) throws IOException {
+	public Replay(String fileName) throws IOException,InterruptedException {
 		runner = new ControllableRunner(new MappedFileSource(fileName)).runWith(this);
 		runner.seek(2);
 	}
 	
-	public void seek(int tick){
+	public void seek(int tick) throws InterruptedException{
 		runner.seek(tick);
 	}
 	
@@ -110,49 +110,12 @@ class Replay{
 			return getIntResource("CDOTA_DataRadiant","m_vecDataTeam.000"+player_pos+".m_iCampsStacked");
 		return getIntResource("CDOTA_DataDire","m_vecDataTeam.000"+(player_pos-5)+".m_iCampsStacked");
 	}
-	public int getMaxHealth(int player_pos) throws Exception{
-		String localized_name = getLocalizedName(getHeroId(player_pos));
-		return getIntResource("CDOTA_Unit_Hero_"+localized_name,"m_iMaxHealth");
-	}
-	public float getMaxMana(int player_pos) throws Exception{
-		String localized_name = getLocalizedName(getHeroId(player_pos));
-		return getFloatResource("CDOTA_Unit_Hero_"+localized_name,"m_flMaxMana");
-	}
-	public float getStrength(int player_pos) throws Exception{
-		String localized_name = getLocalizedName(getHeroId(player_pos));
-		return getFloatResource("CDOTA_Unit_Hero_"+localized_name,"m_flStrengthTotal");
-	}
-	public float getAgility(int player_pos) throws Exception{
-		String localized_name = getLocalizedName(getHeroId(player_pos));
-		return getFloatResource("CDOTA_Unit_Hero_"+localized_name,"m_flAgilityTotal");
-	}
-	public float getIntellect(int player_pos) throws Exception{
-		String localized_name = getLocalizedName(getHeroId(player_pos));
-		return getFloatResource("CDOTA_Unit_Hero_"+localized_name,"m_flIntellectTotal");
-	}
 	public int getPrimaryRune(){
 		return getIntResource("CDOTA_DataSpectator","m_hPrimaryRune");
 	}
 	
-	public String getLocalizedName(long hero_id) throws Exception{
-		JSONParser parser = new JSONParser();
-		ClassLoader classLoader = getClass().getClassLoader();
-		InputStream is = Main.class.getResourceAsStream("/heros.json");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		StringBuilder out = new StringBuilder();
-		String line;
-		while ((line = reader.readLine()) != null)
-				out.append(line);
-		JSONObject jsonObject = (JSONObject) parser.parse(out.toString());
-		JSONObject result = (JSONObject) jsonObject.get("result");
-		JSONArray heros = (JSONArray) result.get("heroes");
-		JSONObject hero = null;
-		for(int i=0;i<heros.size();i++){
-			hero =  (JSONObject) heros.get(i);
-			if((long)hero.get("id")==hero_id)
-				break;
-		}
-		return (String) hero.get("localized_name");
+	public int getBountyRune_1(){
+		return getIntResource("CDOTA_DataSpectator","m_hBountyRune_1");
 	}
 	
 	private int getIntResource(String entityName,String fieldName){
@@ -183,24 +146,19 @@ class Replay{
 	
 	private String getIndividualPlayerData(int player_id) throws Exception{
 		String individualPlayerData="";
-		individualPlayerData+=Float.toString(getAgility(player_id))+",";
 		individualPlayerData+=Integer.toString(getAssists(player_id))+",";
 		individualPlayerData+=Integer.toString(getCampsStacked(player_id))+",";
 		individualPlayerData+=Integer.toString(getDeaths(player_id))+",";
 		individualPlayerData+=Integer.toString(getDenyCount(player_id))+",";
 		individualPlayerData+=Float.toString(getHealing(player_id))+",";
-		individualPlayerData+=Float.toString(getIntellect(player_id))+",";
 		individualPlayerData+=Integer.toString(getKills(player_id))+",";
 		individualPlayerData+=Integer.toString(getLastHitCount(player_id))+",";
 		individualPlayerData+=Integer.toString(getLevel(player_id))+",";
-		individualPlayerData+=Integer.toString(getMaxHealth(player_id))+",";
-		individualPlayerData+=Float.toString(getMaxMana(player_id))+",";
 		individualPlayerData+=Integer.toString(getNetWorth(player_id))+",";
 		individualPlayerData+=Integer.toString(getObserverWardsPlaced(player_id))+",";
 		individualPlayerData+=Integer.toString(getRoshanKills(player_id))+",";
 		individualPlayerData+=Integer.toString(getRunePickups(player_id))+",";
 		individualPlayerData+=Integer.toString(getSentryWardsPlaced(player_id))+",";
-		individualPlayerData+=Float.toString(getStrength(player_id))+",";
 		individualPlayerData+=Float.toString(getStunDuration(player_id))+",";
 		individualPlayerData+=Integer.toString(getTotalGoldEarned(player_id))+",";
 		individualPlayerData+=Integer.toString(getTotalXPEarned(player_id))+",";

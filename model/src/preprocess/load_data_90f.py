@@ -21,8 +21,8 @@ def load(time_elapsed):
 	for row in query:
 		match_id = row[0]
 		match = np.array(row)
-		match = np.delete(match,[0,1]).reshape(10,22)
-		del_index = [0,2,5,6,9,10,11,13,14,15,16,17,18]
+		match = np.delete(match,[0,1]).reshape(10,17)
+		del_index = [1,4,7,9,10,11,12,13]
 		#ASSISTS,DEATHS,DENY_COUNT,KILLS,LAST_HIT_COUNT,NET_WORTH,TOTAL_GOLD_EARNED,TOTAL_XP_EARNED,TOWER_KILLS
 		match = np.delete(match,del_index,1)
 		radiant = match[:5]#.sum(axis=0)

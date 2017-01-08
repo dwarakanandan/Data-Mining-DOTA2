@@ -9,7 +9,7 @@ def getMatchOutcome(match_id,connection):
 		return 1
 
 def load(time_elapsed):
-	connection = sqlite3.connect("../../../../data/dota2.db")
+	connection = sqlite3.connect("../../../../resources/dota2.db")
 	query = connection.execute("SELECT * FROM PLAYER_DATA WHERE TIME_ELAPSED="+str(time_elapsed)).fetchall()
 	features = []
 	lables  = []
@@ -18,16 +18,20 @@ def load(time_elapsed):
 		match_id = x[0]
 		x = x[2:]
 		new_f = []
-		for i in range(0,22):
+		for i in range(0,17):
 			temp = 0
 			for j in range(0,5):
-				temp+=x[(j*22)+i]
+				temp+=x[(j*17)+i]
 			new_f.append(temp)
 			temp = 0
 			for j in range(5,10):
-				temp+=x[(j*22)+i]
+				temp+=x[(j*17)+i]
 			new_f.append(temp)
 		features.append(new_f)
 		lables.append(getMatchOutcome(match_id,connection))
 	connection.close()
 	return np.array(features),np.array(lables)
+
+x,y = load(1)
+print x.shape
+print y.shape

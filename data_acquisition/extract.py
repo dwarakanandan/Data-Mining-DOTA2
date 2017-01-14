@@ -3,7 +3,7 @@ import os
 import bz2
 import sys
 
-NUM_THREADS = 4
+NUM_THREADS = 8
 
 class myThread (threading.Thread):
 		def __init__(self, threadID,bz2List):
@@ -14,27 +14,27 @@ class myThread (threading.Thread):
 				print "Starting Thread "+self.threadID+"\n",
 				for bz2file in self.bz2List:
 					print "[Thread "+self.threadID+"]"+"Extracting "+bz2file+"\n",
-					extract(self.threadID,bz2file)
+					extract(self,bz2file)
 				print "Exiting Thread "+self.threadID+"\n",
 
-def extract(threadID,bz2file):
+def extract(self,bz2file):
 	match_id = bz2file.split(".")[0]
-	zipfile = bz2.BZ2File("../../resources/replays/"+bz2file)
+	zipfile = bz2.BZ2File("C:/Ani/Project/Beta/resources/replays/"+bz2file)
 	try:
 		data = zipfile.read()
 		open("../../resources/replays_dem/"+match_id+".dem", 'wb').write(data)
 	except EOFError:
 		zipfile.close()
 		print "[Thread "+self.threadID+"]"+"EOF error: deleted"+str(match_id)+"\n",
-		os.remove("../../resources/replays/"+bz2file)
+		#os.remove("../../resources/replays/"+bz2file)
 		os.remove("../../resources/match_details/"+match_id.split("_")[0]+".json")
 	except IOError:
 		zipfile.close()
 		print "[Thread "+self.threadID+"]"+"IO error: deleted"+str(match_id)+"\n",
-		os.remove("../../resources/replays/"+bz2file)
+		#os.remove("../../resources/replays/"+bz2file)
 		os.remove("../../resources/match_details/"+match_id.split("_")[0]+".json")
 
-files = os.listdir("../../resources/replays")
+files = os.listdir("C:/Ani/Project/Beta/resources/replays")
 bz2files = []
 
 for f in files:

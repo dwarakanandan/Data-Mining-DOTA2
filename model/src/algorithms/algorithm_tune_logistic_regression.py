@@ -3,7 +3,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 import pickle
 
-features = 18
+features = 90
 results = []
 if __name__ == '__main__':
 	for i in range(1,31):

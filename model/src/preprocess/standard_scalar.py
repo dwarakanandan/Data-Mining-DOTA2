@@ -1,10 +1,10 @@
 from sklearn.preprocessing import StandardScaler
 import numpy as np
-from load_data_90f import load
+from load_data_18f import load
 import pickle
 import os
 
-features = "90"
+features = "18"
 if not os.path.exists("../../cache/"+features+"f"):
 	os.mkdir("../../cache/"+features+"f")
 

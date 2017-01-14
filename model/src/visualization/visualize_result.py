@@ -15,6 +15,6 @@ def plot(fname,color):
 	plt.plot(x,y_lr,label=fname.split("_")[-1],color=color)
 
 plot("algorithm_lr_18f","g")
-#plot("algorithm_lr_90f","r")
+plot("algorithm_lr_90f","r")
 plt.legend(loc=2)
 plt.show()

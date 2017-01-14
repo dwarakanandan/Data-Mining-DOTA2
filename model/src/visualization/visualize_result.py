@@ -1,5 +1,6 @@
 import pickle
 import matplotlib.pyplot as plt
+import numpy as np
 
 def plot(fname,color):
 	results = pickle.load(open("../../saves/lr/"+fname+".pkl","rb"))

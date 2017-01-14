@@ -55,7 +55,7 @@ def parse_match(game):
     return match_18f,match_90f
 
 
-features = 90
+features = 18
 res = urllib2.urlopen("https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key=ACABEB1FD8894A44B2A5AB4B79209C75")
 string = res.read().decode('utf-8')
 json_obj = json.loads(string)

@@ -49,3 +49,4 @@ Temporary Items
 # My additions
 data_extraction/Dota2-Parser/target
 model/cache
+model/saves

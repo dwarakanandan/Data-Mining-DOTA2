@@ -3,6 +3,7 @@
 
 <head>
 	<title>Dota 2 Games</title>
+	<meta http-equiv="refresh" content="10">
 	<meta charset="utf-8" />
   {% load staticfiles %}
   <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
@@ -30,26 +31,11 @@
   </style>
 	<script type="text/javascript">
 	var matches;
+
 	function onBtnClick(matchIndex){
 		var match = matches[matchIndex];
-		//document.write(JSON.stringify(matches[matchIndex]));
-		var htmlString = "";
-		if(match.scoreboard.duration < 120)
-		{
-			htmlString += "<h3>The match duration is less than 2 mins. Try again later.</h3>"
-		}else{
-			htmlString += "<h3>The match duration is " + (match.scoreboard.duration/60) + " mins</h3>";
-			htmlString += "<h3>The Score of Radiant:Dire is " + match.scoreboard.radiant.score + " : " + match.scoreboard.dire.score + "</h3>";
-			htmlString += "<h3>Networth of Radiant:Dire is ";
-			var netWorthRadiant = 0;
-			var netWorthDire = 0;
-			for(var i = 0;i < 5;i++){
-				netWorthRadiant += match.scoreboard.radiant.players[i].net_worth;
-				netWorthDire += match.scoreboard.dire.players[i].net_worth;
-			}
-			htmlString +=  netWorthRadiant + " : " + netWorthDire;
-		}
-			document.getElementById("temp").innerHTML = htmlString  + "</h3>";
+		sessionStorage.setItem('match',JSON.stringify(match));
+		window.location.href = "/prediction/";
 	};
 
 	function matchList(){

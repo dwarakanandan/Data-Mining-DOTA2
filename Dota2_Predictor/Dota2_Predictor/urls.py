@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^livegames/', include('livegames.urls')),
+    url(r'^prediction/',include('prediction.urls'))
 ]

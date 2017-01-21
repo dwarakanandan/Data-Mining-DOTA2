@@ -11,8 +11,5 @@ def getDetailsJSON(request):
     file = open('JSONs/livegames.json', 'r')
     json_obj_livegames = json.loads(file.read())
     file.close()
-    file = open('JSONs/heroes.json', 'r')
-    json_obj_heroes = json.loads(file.read())
-    file.close()
-    json_obj = {"livegames":json_obj_livegames, "heroes":json_obj_heroes}
+    json_obj = {"livegames":json_obj_livegames}
     return JsonResponse(json_obj)

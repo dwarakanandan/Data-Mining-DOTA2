@@ -1,5 +1,5 @@
 google.charts.load('current', {'packages':['corechart']}); <!-- load the visualization api -->
-var heroes
+var heroes;
 
 function n(n){
 return n > 9 ? "" + n: "0" + n;
@@ -11,6 +11,7 @@ function displayScoreBoard(match){
 }
 
 function onloadFunc(){
+  var teams = ['radiant', 'dire'];
   var matchString = sessionStorage.match;
   var match = JSON.parse(matchString);
   heroes = JSON.parse(sessionStorage.heroes);
@@ -31,11 +32,13 @@ function onloadFunc(){
     htmlString += "<h3>The match duration is less than 2 mins. Try again later.</h3>"
     document.getElementById('toggleteamindividual').style.display = 'none';
   }else{
-    var predict_result = "<h3>Prediction probablity for Radiant : "+ result["prediction_probablity"]["radiant_probablity"].toFixed(3)+"</h3>";
-    predict_result += "<h3> Prediction probablity for Dire :"+ result["prediction_probablity"]["dire_probablity"].toFixed(3)+"</h3>";
-    predict_result += "<h3> Prediction accuracy is : "+result["global_prediction_accuracy"].toFixed(3)+"</h3>";
-    predict_result += "<h3> Predicted Winner is : "+result["prediction"]+"</h3>";
-    document.getElementById("prediction").innerHTML = predict_result;
+    if(result.prediction_success == "true"){
+      var predict_result = "<h3>Prediction probablity for Radiant : "+ result["prediction_probablity"]["radiant_probablity"].toFixed(3)+"</h3>";
+      predict_result += "<h3> Prediction probablity for Dire :"+ result["prediction_probablity"]["dire_probablity"].toFixed(3)+"</h3>";
+      predict_result += "<h3> Prediction accuracy is : "+result["global_prediction_accuracy"].toFixed(3)+"</h3>";
+      predict_result += "<h3> Predicted Winner is : "+result["prediction"]+"</h3>";
+      document.getElementById("prediction").innerHTML = predict_result;
+    }
     htmlString += "<h3>The match duration is " + n(Math.floor(match.scoreboard.duration/60)) + ":" + n(Math.floor(((match.scoreboard.duration/60)%1) * 60)) + "</h3>";
     //htmlString += "<h3>The Score of Radiant:Dire is " + match.scoreboard.radiant.score + " : " + match.scoreboard.dire.score + "</h3>";
     htmlString += "<h3>Networth of Radiant:Dire is ";
@@ -43,11 +46,13 @@ function onloadFunc(){
     var netWorthDire = 0;
     var netWorthRArr = [];
 		var netWorthDArr = [];
-    for(var i = 0;i < 5;i++){
-      netWorthRadiant += match.scoreboard.radiant.players[i].net_worth;
-      netWorthDire += match.scoreboard.dire.players[i].net_worth;
-      netWorthRArr[i] = match.scoreboard.radiant.players[i].net_worth;
-			netWorthDArr[i] = match.scoreboard.dire.players[i].net_worth;
+    for(var t = 0;t < teams.length;t++){
+      for(i = 0;i < match.scoreboard[teams[t]].players.length;i++){
+        netWorthRadiant += match.scoreboard.radiant.players[i].net_worth;
+        netWorthDire += match.scoreboard.dire.players[i].net_worth;
+        netWorthRArr[i] = match.scoreboard.radiant.players[i].net_worth;
+  			netWorthDArr[i] = match.scoreboard.dire.players[i].net_worth;
+      }
     }
     htmlString +=  netWorthRadiant + " : " + netWorthDire;
     barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr);
@@ -91,19 +96,18 @@ function barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr){
                       }
                   },
 
-     animation: {"startup": true , easing: 'out', duration: 1000,}
+     animation: {easing: 'out', duration: 1000,}
        };
 
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
 
-    google.charts.setOnLoadCallback(drawChart); <!-- setting callback -->
+  //  google.charts.setOnLoadCallback(drawChart); <!-- setting callback -->
     function drawChart(){
    /* var data = google.visualization.arrayToDataTable([
        ['Team', 'this color needs to change', { role: 'style' },  { role: 'annotation' }],
        ['Radiant', netWorthRadiant, 'color:green ; opacity:0.8',netWorthRadiant],
        ['Dire', netWorthDire, 'color:red ; opacity:0.8', netWorthDire ],
     ]); */
-
       toggleteamindividual.disabled = true;
       google.visualization.events.addListener(chart, 'ready',
         function() {
@@ -117,14 +121,15 @@ function barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr){
       toggleteamindividual.onclick = function(){
         if(options.title == "Net Worth of Each Player"){
           options.title = "Net Worth of Teams";
-          options.legend = {position: 'none'};
-          options.animation = {"startup": true , easing: 'in', duration: 1000,};
+          options.legend = { position: 'none' };
+          options.animation = {easing: 'out', duration: 1000 };
           chart.draw(data2, options);
         }else{
           options.title = "Net Worth of Each Player";
-          options.legend = {position: 'bottom'};
+          options.legend = { position: "bottom", textStyle: { color: 'white' } };
           chart.draw(data1, options);
         }
       }
 
+      drawChart();
   }

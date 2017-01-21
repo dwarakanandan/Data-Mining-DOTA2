@@ -1,4 +1,4 @@
-var matches, heroes, timer = 20, tempHeroes;
+var matches, timer = 20, tempHeroes;
 
 function n(n){
 return n > 9 ? "" + n: "0" + n;
@@ -10,6 +10,7 @@ function updateTimer(){
     timer--;
   }else{
     timer = 20;
+    matchList();
   }
   setTimeout(updateTimer, 1000);
 }
@@ -36,8 +37,8 @@ function matchList(){
     var teams = ['radiant', 'dire'];     //Use it to reduce repetition of code in the for loop below
     var response = userRequest.responseText;
     var userData = JSON.parse(response);
-    heroes = userData.heroes;
     tempHeroes = heroes.heroes;
+
     tempHeroes.sort(function(a,b){      //Sort so that iteration in method getHeroURL can begin from id - 2 instead of 0
       return a.id - b.id;
     });
@@ -45,13 +46,14 @@ function matchList(){
     matches.sort(function(a,b){
       return b.spectators - a.spectators;
     });
+
     var htmlString = '<div class = "container" id = "match">';
     htmlString += '<span class = "heading"><center>MATCHES</center></span><br/>';
     for (i = 0;i < matches.length;i++)
     {
       heroesArray = [];
       try{
-          if(matches[i].scoreboard && matches[i].scoreboard.duration > 0){
+          if(matches[i].scoreboard && (matches[i].scoreboard.duration > 0) && (matches[i].scoreboard.radiant.players.length > 1) && (matches[i].scoreboard.dire.players.length > 1)){
             for(var t = 0;t < teams.length;t++){
               if(matches[i].scoreboard[teams[t]].players.length > 1){
                 matches[i].scoreboard[teams[t]].players.sort(function(a,b){

@@ -1,0 +1,62 @@
+* {
+  font-family: Arsenal;
+  float: both;
+}
+#scoreboard{
+  align: left;
+  width: 30%;
+}
+.heading{
+  color: #555555;
+  font-size: 1.5em;
+}
+.score-wrapper{
+  padding: 1em;
+  background-color: #111111;
+}
+.radiant-score-wrapper{
+  display: inline-block;
+  text-align: center;
+  float: left;
+  width: 50%;
+}
+.dire-score-wrapper{
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+}
+#radiant-score, #dire-score{
+  font-size: 5em;
+  color: white;
+  font-weight: bold;
+}
+#score-radiant{
+  font-size: 1.25em;
+  color: green;
+}
+#score-dire{
+  font-size: 1.25em;
+  color: red;
+}
+#perspective{
+  -webkit-perspective: 200px;
+  perspective: 200px;
+  -o-perspective: 200px;
+  -moz-perspective: 200px;
+}
+#toggleteamindividual {
+  color: #DDDDDD;
+  background-color: #222222;
+  transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+}
+#toggleteamindividual:hover{
+  background-color: #DDDDDD;
+  color: #222222;
+  box-shadow: 5px 5px 10px 2px #BBBBBB;
+  -webkit-transform:translateZ(1.5px);
+  -o-transform:translateZ(1.5px);
+  -moz-transform:translateZ(1.5px);
+}

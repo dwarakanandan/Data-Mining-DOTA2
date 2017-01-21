@@ -8,8 +8,8 @@ while(True):
     string = res.read().decode('utf-8')
     json_obj = json.loads(string)
     matches = json_obj['result']['games']
-    file = open("live JSON/livegames.json", "w")
+    file = open("JSONs/livegames.json", "w")
     json.dump(json_obj, file)
     file.close()
-    print "[",datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"] Live games updated..."
+    #print "[",datetime.now().strftime('%Y-%m-%d %H:%M:%S'),"] Live games updated..."
     time.sleep(10)

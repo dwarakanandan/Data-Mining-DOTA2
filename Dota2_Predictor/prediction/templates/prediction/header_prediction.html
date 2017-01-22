@@ -23,18 +23,18 @@
 
     <div class="container-fluid" style="min-height:95%; ">
 
-      <div class="row">
-        <div class = "col-sm-2">
-          <center>
-            <img src="{% static 'img/logo.jpg' %}" class="img-responsive" alt="Dota2 Logo">
-          </center>
-        </div>
-        <div class = "col-sm-10">
-          <center>
-            <h3>Dota 2 Predictor</h3>
-          </center>
-        </div>
+    <div class="row">
+      <div class = "col-sm-2">
+        <center>
+          <img src="{% static 'img/logo.jpg' %}" class="img-responsive" alt="Dota2 Logo">
+        </center>
       </div>
+      <div class = "col-sm-10">
+        <center>
+          <h3>Dota 2 Predictor</h3>
+        </center>
+      </div>
+    </div>
 
       <div class = "container" id = "scoreboard" background-color : "black">
         <span class = "heading">SCORE</span>
@@ -53,6 +53,22 @@
 
       <div id = "prediction">
       </div>
+
+    <div class = "container" id = "map-wrapper">
+      <span class = "heading">MAP</span>
+      <div class = "map">
+        <img src = {% static "img/dota_minimap.png" %}  id = "img"/>
+        <div class = "towers radiant" id = "towers-radiant">
+        </div>
+        <div class = "towers dire" id = "towers-dire">
+        </div>
+        <div class = "rax radiant" id = "rax-radiant">
+        </div>
+        <div class = "rax dire" id = "rax-dire">
+        </div>
+      </div>
+    </div>
+
       <div>
         <div id="chart">
         </div>
@@ -60,7 +76,6 @@
           <button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button>
         </div>
      </div>
-
     </div>
 
   </body>

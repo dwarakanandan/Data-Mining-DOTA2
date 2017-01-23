@@ -6,6 +6,7 @@
     <title>Prediction</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arsenal">
+    <link rel="stylesheet" href={% static 'css/hero-icons/assets/stylesheets/dota2minimapheroes.css' %}>
     <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
     <link rel="stylesheet" href={% static 'css/prediction.css' %}/>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -69,14 +70,18 @@
       </div>
     </div>
 
-      <div>
+    <div>
         <div id="chart">
         </div>
         <div id = "perspective" class = "container">
           <button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button>
         </div>
      </div>
+
+    <div class = "container" id = "table">
+      <script type="text/javascript" src = {% static 'js/table.js' %}></script>
     </div>
 
+    </div>
   </body>
 </html>

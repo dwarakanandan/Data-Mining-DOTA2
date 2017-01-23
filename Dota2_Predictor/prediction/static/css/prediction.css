@@ -1,6 +1,5 @@
 * {
   font-family: Arsenal;
-  float: both;
 }
 #scoreboard{
   width: 30%;
@@ -266,4 +265,46 @@
 .rax11 {
     top: 28%;
     left: 89%
+}
+
+.table-wrapper{
+  background-color: #222222;
+  padding: 1rem 1rem 1rem 1rem;
+  margin: 1rem 1rem 1rem 1rem;
+  display: block;
+  overflow: auto;
+}
+.table{
+  display: inline-block;
+}
+.table-wrapper{
+  display: table;
+}
+td, th{
+  color: white;
+  font-weight: bold;
+  padding: 1rem 1rem 1rem 1rem;
+}
+th.active{
+  background-color: #444444;
+}
+.tr.radiant td.active{
+  background-color: #00BB00;
+}
+.tr.dire td.active{
+  background-color: #BB0000;
+}
+.tr.radiant{
+  background-color: #005500;
+  opacity: 1;
+}
+.tr.radiant:hover{
+  background-color: #009900;
+}
+.tr.dire{
+  background-color: #550000;
+  opacity: 1;
+}
+.tr.dire:hover{
+  background-color: #990000;
 }

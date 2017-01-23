@@ -33,10 +33,10 @@ function drawMap(){
   radiant_barracks_state = toBinary(match.scoreboard.radiant.barracks_state, 8);
   dire_barracks_state = toBinary(match.scoreboard.dire.barracks_state, 8);
 
-  console.log("Radiant tower state: " + match.scoreboard.radiant.tower_state + " : " + radiant_tower_state);
+  /*console.log("Radiant tower state: " + match.scoreboard.radiant.tower_state + " : " + radiant_tower_state);
   console.log("Dire tower state: " + match.scoreboard.dire.tower_state + " : " + dire_tower_state);
   console.log("Radiant barracks state: " + match.scoreboard.radiant.barracks_state + " : " + radiant_barracks_state);
-  console.log("Dire barracks state: " +match.scoreboard.dire.barracks_state + " : " + dire_barracks_state);
+  console.log("Dire barracks state: " +match.scoreboard.dire.barracks_state + " : " + dire_barracks_state);*/
 
 
   towers_radiant += '<div class = "tower0 ' + buildingStatus(radiant_tower_state[15]) + '"></div>';//Top Tier 1
@@ -130,7 +130,7 @@ function onloadFunc(){
     htmlString +=  netWorthRadiant + " : " + netWorthDire;
 
     htmlString += "<h3>Math ID is " + match.match_id;
-    
+
     barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr);
     }
     document.getElementById("match_details").innerHTML = htmlString  + "</h3>";
@@ -149,9 +149,9 @@ function barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr){
    ]);
 
    var data2 = google.visualization.arrayToDataTable([
-     ['Team', 'Net Worth',{ role: 'style' }],
-     ['Radiant', netWorthRadiant,'opacity:0.8; color: #00ff00;'],
-     ['Dire', netWorthDire,'opacity:0.8; color: #ff0000;'],
+     ['Team'   , '' ,'Net Worth' ,{ role: 'style' },' ','Net Worth'     ,{ role: 'style' },''],//Use same number of columns as data1 and then use 0.0 as the values of the not needed values
+     ['Radiant',0.0 ,0.0         , ' '             ,0.0, netWorthRadiant,'opacity:0.8;'   ,0.0],
+     ['Dire'   ,0.0 ,netWorthDire,'opacity:0.8;'   ,0.0,0.0             ,'opacity:0.8;'   ,0.0],
    ]);
 
    var options = {
@@ -172,7 +172,7 @@ function barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr){
                       }
                   },
 
-     animation: {easing: 'out', duration: 1000,}
+     animation: {"startup": true, easing: 'out', duration: 1000,}
        };
 
     var chart = new google.visualization.BarChart(document.getElementById('chart'));
@@ -198,7 +198,6 @@ function barGraph(netWorthRadiant,netWorthDire,netWorthRArr,netWorthDArr){
         if(options.title == "Net Worth of Each Player"){
           options.title = "Net Worth of Teams";
           options.legend = { position: 'none' };
-          options.animation = {easing: 'out', duration: 1000 };
           chart.draw(data2, options);
         }else{
           options.title = "Net Worth of Each Player";

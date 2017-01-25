@@ -53,7 +53,7 @@
   function drawTable(){
     var str = '<span class = "heading">PLAYER STATISTICS</span>';
 
-    str += '<div class = "table-wrapper">'
+    str += '<div class = "table">'
     str += '<table border = "0">';
     str += '<tr>';
     str += '<th>Name</th>';
@@ -77,7 +77,7 @@
     }
     str += '</table></div>';
 
-    document.getElementById('table').innerHTML = str;
+    document.getElementById('table-wrapper').innerHTML = str;
   }
 
   players_sort("net_worth");

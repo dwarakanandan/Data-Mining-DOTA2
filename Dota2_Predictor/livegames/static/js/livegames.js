@@ -1,4 +1,4 @@
-var matches, timer = 20, tempHeroes;
+var matches, timer = 20, timerHandler, tempHeroes;
 
 function n(n){
 return n > 9 ? "" + n: "0" + n;
@@ -10,9 +10,13 @@ function updateTimer(){
     timer--;
   }else{
     timer = 20;
+    clearTimeout(timerHandler);
+    document.getElementById("timer").innerHTML = "<center>Loading...</center>";
     matchList();
+    return;
   }
-  setTimeout(updateTimer, 1000);
+
+  timerHandler = setTimeout(updateTimer, 1000);
 }
 
 function getHeroURL(id) {
@@ -39,6 +43,8 @@ function matchList(){
     var userData = JSON.parse(response);
     tempHeroes = heroes.heroes;
 
+    updateTimer();
+
     tempHeroes.sort(function(a,b){      //Sort so that iteration in method getHeroURL can begin from id - 2 instead of 0
       return a.id - b.id;
     });
@@ -53,7 +59,7 @@ function matchList(){
     {
       heroesArray = [];
       try{
-          if(matches[i].scoreboard && (matches[i].scoreboard.duration > 0) && (matches[i].scoreboard.radiant.players.length > 1) && (matches[i].scoreboard.dire.players.length > 1)){
+          if(matches[i].scoreboard && (matches[i].scoreboard.duration > 0) && (matches[i].scoreboard.radiant.players.length == 5) && (matches[i].scoreboard.dire.players.length == 5)){
             for(var t = 0;t < teams.length;t++){
               if(matches[i].scoreboard[teams[t]].players.length > 1){
                 matches[i].scoreboard[teams[t]].players.sort(function(a,b){

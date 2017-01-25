@@ -1,27 +1,58 @@
 * {
   font-family: Arsenal;
 }
+
+.mycontainer{
+  width: 96%;
+}
+.net_worth{
+  color: #FFD700;
+}
+.display_radiant{
+  color: green;
+}
+.display_dire{
+  color: red;
+}
+#match_prediction_details{
+  font-size: 1em;
+  padding: 1rem 1rem 1rem 1rem;
+  background-color: #222222;
+  margin: 1rem 1rem 1rem 1rem;
+}
+#row_prediction_details{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
 #scoreboard{
-  width: 30%;
+  display: inline;
+  width: inherit;
 }
 .heading{
+  font-weight: bold;
   color: #555555;
   font-size: 1.5em;
+  margin: 1rem 1rem 1rem 1rem;
+}
+.heading::after{
+  content: " ";
+  display: block;
+  clear: both;
 }
 .score-wrapper{
+  display: block;
+  width: 100%;
   padding: 1em;
-  background-color: #111111;
+  background-color: #222222;
 }
 .radiant-score-wrapper{
   display: inline-block;
-  text-align: center;
-  float: left;
-  width: 50%;
+  width: 45%;
 }
 .dire-score-wrapper{
   display: inline-block;
-  text-align: center;
-  width: 50%;
+  width: 45%;
 }
 #radiant-score, #dire-score{
   font-size: 5em;
@@ -43,6 +74,7 @@
   -moz-perspective: 200px;
 }
 #toggleteamindividual {
+  display: none;
   color: #DDDDDD;
   background-color: #222222;
   transition-duration: 0.5s;
@@ -59,9 +91,19 @@
   -moz-transform:translateZ(1.5px);
 }
 
+.chart-wrapper{
+}
 .chart{
-  width: 50%;
+}
+
+.pie-chart-wrapper{
+  width: inherit;
   display: inline;
+  min-height: 10%;
+  background-color: #FFF;
+}
+.pie_chart{
+  display: block;
 }
 
 .match-details{
@@ -76,18 +118,14 @@
 
 #map-wrapper{
   position: relative;
-  width: 50%;
   margin: 2rem 2rem 2rem 2rem;
   padding: 1rem 1rem 1rem 1rem;
-}
-.heading{
-  color: #555555;
-  font-size: 2rem;
 }
 .map{
   position: relative;
   max-width: 100%;
-  background-color: #111111;
+  display: table-cell;
+  background-color: #222222;
   margin: 2rem 2rem 2rem 2rem;
   padding: 1rem 1rem 1rem 1rem;
 }
@@ -267,18 +305,24 @@
     left: 89%
 }
 
+
 .table-wrapper{
-  background-color: #222222;
-  padding: 1rem 1rem 1rem 1rem;
-  margin: 1rem 1rem 1rem 1rem;
-  display: block;
-  overflow: auto;
+  max-width: 100%;
 }
 .table{
-  display: inline-block;
+  background-color: #222222;
+  width: 100%;
+  padding: 1rem 1rem 1rem 1rem;
+  margin: 1rem 1rem 1rem 1rem;
 }
-.table-wrapper{
-  display: table;
+table{
+  width: 100%;
+}
+th{
+  cursor: pointer;
+}
+tr{
+  vertical-align: center;
 }
 td, th{
   color: white;

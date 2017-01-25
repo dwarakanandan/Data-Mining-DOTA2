@@ -10,6 +10,7 @@
     <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
     <link rel="stylesheet" href={% static 'css/prediction.css' %}/>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
     <!--<link rel="stylesheet" href={% static 'css/tooltip.css' %}/>
     <link rel="stylesheet" href={% static 'css/util.css' %}/>
     <script type="text/javascript" src="{% static 'js/loader.js' %}"></script>
@@ -36,52 +37,96 @@
         </center>
       </div>
     </div>
+    </div>
 
-      <div class = "container" id = "scoreboard" background-color : "black">
-        <span class = "heading">SCORE</span>
-        <div class = "score-wrapper">
-          <div class = "radiant-score-wrapper">
-            <center id = "radiant-score"></center><center id = "score-radiant">RADIANT</center>
+    <div class = "mycontainer" id = "match_prediction_details">
+        <table border = "0">
+          <tr id = "row_match_details">
+            <td>MatchID : <span id = "match_id"></span></td>
+            <td>Match Duration : <span id = "match_duration"></span></td>
+            <td>Net Worth <span class = "display_radiant">RADIANT</span> : <span class = "net_worth" id = "net_worth_radiant"></span></td>
+            <td>Net Worth <span class = "display_radiant">DIRE</span> : <span class = "net_worth" id = "net_worth_dire"></span></td>
+          </tr>
+          <tr id = "row_prediction_details">
+            <td>Predicted Winner : <span id = "prediction_team">Loading...</span></td>
+            <td><span class = "display_radiant">RADIANT</span> Win Chances : <span id = "prediction_probability_radiant">Loading...</span></td>
+            <td><span class = "display_dire">DIRE</span> Win Chances : <span id = "prediction_probability_dire">Loading...</span></td>
+            <td>Prediction Accuracy : <span id = "prediciton_accuracy">Loading...</span></td>
+          </tr>
+        </table>
+      </div>
+
+    <br /><br />
+
+    <div class="container-fluid">
+      <div class = "mycontainer">
+        <div class = "pie-chart-wrapper" id = "pie-chart-wrapper">
+            <center><span class = "heading">Win Probablity of Radiant and Dire<span></center>
+          <div id="pie_chart" style="width: 100%; min-height: 500px;">
           </div>
-          <div class = "dire-score-wrapper">
-            <center id = "dire-score"></center><center id = "score-dire">DIRE</center>
+        </div>
+      </div>
+      <div class = "col-sm-5">
+
+        <div class = "mycontainer" id = "scoreboard" background-color : "black">
+          <span class = "heading">SCORE</span>
+          <div class = "score-wrapper">
+            <div class = "radiant-score-wrapper">
+              <center id = "radiant-score"></center><center id = "score-radiant">RADIANT</center>
+            </div>
+            <div class = "dire-score-wrapper">
+              <center id = "dire-score"></center><center id = "score-dire">DIRE</center>
+            </div>
           </div>
         </div>
+
+        <div class = "mycontainer" id = "map-wrapper">
+          <span class = "heading">MAP</span>
+          <div class = "map">
+            <img src = {% static "img/dota_minimap.png" %}  id = "img"/>
+            <div class = "towers radiant" id = "towers-radiant">
+            </div>
+            <div class = "towers dire" id = "towers-dire">
+            </div>
+            <div class = "rax radiant" id = "rax-radiant">
+            </div>
+            <div class = "rax dire" id = "rax-dire">
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div id = "match_details">
-      </div>
+      <div class = "col-sm-7">
 
-      <div id = "prediction">
-      </div>
+        <div class = "mycontainer" id = "table-wrapper">
+        </div>
 
-    <div class = "container" id = "map-wrapper">
-      <span class = "heading">MAP</span>
-      <div class = "map">
-        <img src = {% static "img/dota_minimap.png" %}  id = "img"/>
-        <div class = "towers radiant" id = "towers-radiant">
+      <!--  <div id = "match_details">
         </div>
-        <div class = "towers dire" id = "towers-dire">
-        </div>
-        <div class = "rax radiant" id = "rax-radiant">
-        </div>
-        <div class = "rax dire" id = "rax-dire">
-        </div>
+
+        <div id = "prediction">
+        </div>-->
+      </div>
+    </div>
+    <div></div>
+
+    <div class="mycontainer">
+      <div class = "mycontainer" id = "chart-wrapper">
+          <div id="chart" style="width: 100%; min-height: 500px;">
+          </div>
+          <div id = "perspective" class = "mycontainer">
+              <br /><br /><center><button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button></center><br /><br /><br />
+          </div>
       </div>
     </div>
 
-    <div>
-        <div id="chart">
-        </div>
-        <div id = "perspective" class = "container">
-          <button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button>
-        </div>
-     </div>
-
-    <div class = "container" id = "table">
-      <script type="text/javascript" src = {% static 'js/table.js' %}></script>
     </div>
 
+    <script type="text/javascript" src = {% static 'js/displayscoreboard.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/drawmap.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/table.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/bargraph.js' %}></script>
     </div>
   </body>
 </html>

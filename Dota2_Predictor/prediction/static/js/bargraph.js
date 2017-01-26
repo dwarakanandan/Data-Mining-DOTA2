@@ -2,6 +2,10 @@ var match = JSON.parse(sessionStorage.match);
 google.charts.setOnLoadCallback(drawChart);
 var toggleteamindividual = document.getElementById('toggleteamindividual');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> anirudh
 var netWorthRadiant2 = 0;
 var netWorthDire2 = 0;
 var netWorthRArr = [];

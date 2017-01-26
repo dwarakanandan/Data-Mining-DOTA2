@@ -3,7 +3,11 @@
 }
 
 .mycontainer{
+<<<<<<< HEAD
   width: 96%;
+=======
+  width: 98%;
+>>>>>>> anirudh
 }
 #body{
   top: 10%;
@@ -71,10 +75,15 @@
   -o-transition: all 0.5s;
 }
 header h1{
+<<<<<<< HEAD
 
   transition: all 0.4s ease-in-out 0s;
   opacity: 0.5;
 
+=======
+  transition: all 0.4s ease-in-out 0s;
+  opacity: 0.75;
+>>>>>>> anirudh
 }
 header h1:hover{
   opacity: 1.0;

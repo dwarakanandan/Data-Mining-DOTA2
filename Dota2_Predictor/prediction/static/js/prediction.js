@@ -125,9 +125,7 @@ function drawChart(){
 
 window.addEventListener('resize', function(event){
   try{
-    console.log("resizing BarChart");
     drawChart();
-    console.log("resizing PieChart");
     if(match.scoreboard.duration > 119){
       pieGraph(result["prediction_probablity"]["radiant_probablity"].toFixed(4),result["prediction_probablity"]["dire_probablity"].toFixed(4));
     }

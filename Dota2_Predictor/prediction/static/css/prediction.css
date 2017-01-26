@@ -358,7 +358,7 @@ th.active{
 header h1{
 
   transition: all 0.4s ease-in-out 0s;
-  opacity: 0.5;
+  opacity: 0.75;
 
 }
 header h1:hover{
@@ -379,7 +379,6 @@ header h1 a:hover{
   background-image: url("/static/img/d2_bg88.jpg");
 }
 header{
-
   position :static;
   top:0;
   left: 0;

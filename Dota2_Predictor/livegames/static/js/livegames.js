@@ -53,7 +53,7 @@ function matchList(){
       return b.spectators - a.spectators;
     });
 
-    var htmlString = '<div class = "container" id = "match">';
+    var htmlString = '<div class = "mycontainer" id = "match">';
     htmlString += '<span class = "heading"><center>MATCHES</center></span><br/>';
     for (i = 0;i < matches.length;i++)
     {

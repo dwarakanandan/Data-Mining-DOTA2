@@ -2,17 +2,18 @@ var match = JSON.parse(sessionStorage.match);
 google.charts.setOnLoadCallback(drawChart);
 var toggleteamindividual = document.getElementById('toggleteamindividual');
 
-
-var netWorthRadiant = 0;
-var netWorthDire = 0;
+var netWorthRadiant2 = 0;
+var netWorthDire2 = 0;
 var netWorthRArr = [];
 var netWorthDArr = [];
 for(i = 0;i < match.scoreboard.radiant.players.length;i++){
-  netWorthRadiant += match.scoreboard.radiant.players[i].net_worth;
+//  console.log(netWorthRadiant2);
+ netWorthRadiant2 += match.scoreboard.radiant.players[i].net_worth;
   netWorthRArr[i] = match.scoreboard.radiant.players[i].net_worth;
 }
 for(i = 0;i < match.scoreboard.dire.players.length;i++){
-  netWorthDire += match.scoreboard.dire.players[i].net_worth;
+  //console.log(netWorthDire2);
+  netWorthDire2 += match.scoreboard.dire.players[i].net_worth;
   netWorthDArr[i] = match.scoreboard.dire.players[i].net_worth;
 }
 
@@ -41,8 +42,8 @@ var options = {
 function drawChart(){
 /* var data = google.visualization.arrayToDataTable([
    ['Team', 'this color needs to change', { role: 'style' },  { role: 'annotation' }],
-   ['Radiant', netWorthRadiant, 'color:green ; opacity:0.8',netWorthRadiant],
-   ['Dire', netWorthDire, 'color:red ; opacity:0.8', netWorthDire ],
+   ['Radiant', netWorthRadiant2, 'color:green ; opacity:0.8',netWorthRadiant2],
+   ['Dire', netWorthDire2, 'color:red ; opacity:0.8', netWorthDire2 ],
 ]); */
   toggleteamindividual.style.display = "inline";
   chart = new google.visualization.BarChart(document.getElementById('chart'))
@@ -55,8 +56,8 @@ function drawChart(){
 
   data2 = google.visualization.arrayToDataTable([
    ['Team'   , '' ,'Net Worth' ,{ role: 'style' },' ','Net Worth'     ,{ role: 'style' },''],//Use same number of columns as data1 and then use 0.0 as the values of the not needed values
-   ['Radiant',0.0 ,0.0         , ' '             ,0.0, netWorthRadiant,'opacity:0.8;'   ,0.0],
-   ['Dire'   ,0.0 ,netWorthDire,'opacity:0.8;'   ,0.0,0.0             ,'opacity:0.8;'   ,0.0],
+   ['Radiant',0.0 ,0.0         , ' '             ,0.0, netWorthRadiant2,'opacity:0.8;'   ,0.0],
+   ['Dire'   ,0.0 ,netWorthDire2,'opacity:0.8;'   ,0.0,0.0             ,'opacity:0.8;'   ,0.0],
   ]);
 
   toggleteamindividual.disabled = true;

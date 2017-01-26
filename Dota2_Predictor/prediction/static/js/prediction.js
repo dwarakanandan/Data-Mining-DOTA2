@@ -1,4 +1,7 @@
 var heroes, match, netWorthRadiant = 0, netWorthDire = 0;
+var barChartWrapper = document.getElementById('chart');
+var PieChartWrapper = document.getElementById('pie_chart');
+var result;
 
 function n(n){
 return n > 9 ? "" + n: "0" + n;
@@ -57,7 +60,7 @@ function onloadFunc(){
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(matchString)
   xhr.onload = function(){
-  var result = xhr.responseText;
+  result = xhr.responseText;
   result= JSON.parse(result);
   console.log(result);
   loadPredictionDetails(result);
@@ -85,7 +88,7 @@ var options = {
              legend : {position: "bottom", textStyle: { color: 'white' } },
              backgroundColor: 'black',
              chartArea: {
-                           left:200,
+                           left:document.getElementById('pie-chart-wrapper').innerWidth/8,
                            top:0,
                          },
             tooltip : { text:'percentage'} ,
@@ -119,3 +122,14 @@ function drawChart(){
 
   drawChart();
 }
+
+window.addEventListener('resize', function(event){
+  try{
+    console.log("resizing BarChart");
+    drawChart();
+    console.log("resizing PieChart");
+    if(match.scoreboard.duration > 119){
+      pieGraph(result["prediction_probablity"]["radiant_probablity"].toFixed(4),result["prediction_probablity"]["dire_probablity"].toFixed(4));
+    }
+  }catch(e){}
+});

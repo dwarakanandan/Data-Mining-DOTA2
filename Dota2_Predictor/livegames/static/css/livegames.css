@@ -1,9 +1,18 @@
 *{
   font-family: Arsenal;
 }
+
+.mycontainer{
+  width: 98%;
+}
+#body{
+  top: 10%;
+}
 .heading{
-  color: #555555;
-  font-size: 2rem;
+  color: white;
+  font-size: 5rem;
+  text-decoration: underline;
+  text-shadow: 4px 4px 4px #aaa;
 }
 .matchlist-wrapper{
   position: relative;
@@ -60,4 +69,33 @@
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
+}
+header h1{
+  transition: all 0.4s ease-in-out 0s;
+  opacity: 0.5;
+}
+header h1:hover{
+  opacity: 1.0;
+
+}
+header h1 a:hover{
+  text-decoration: none;
+}
+.light{
+  font-size : 7rem;
+  font-weight :bold;
+  font-family: Bungee Inline;
+  text-shadow: 4px 4px 4px #aaa;
+  color : red;
+}
+.myheader{
+  background-image: url("/static/img/d2_bg88.jpg");
+}
+header{
+
+  position :static;
+  top:0;
+  left: 0;
+  z-index:5000;
+  width : 100%;
 }

@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.main, name="main"),
-    url(r'^livegames.json$', views.getJSON, name = "getJSON"),
+    url(r'^details.json$', views.getDetailsJSON, name = "getJSON"),
 ]

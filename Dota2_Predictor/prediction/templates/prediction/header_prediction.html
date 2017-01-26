@@ -1,89 +1,132 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta charset="utf-8">
     <title>Prediction</title>
     {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arsenal">
+    <link rel="stylesheet" href={% static 'css/hero-icons/assets/stylesheets/dota2minimapheroes.css' %}>
     <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
-    <style type = "text/css">
-    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-      background-color: #333333;
-    }
-    .radiant{
-      background-color: #00AA00;
-    }
-    .dire{
-      background-color: #AA0000;
-    }
-  	.table-hover tbody tr td:hover {
-      background-color: #777777;
+    <link rel="stylesheet" href={% static 'css/prediction.css' %}/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
+    <!--<link rel="stylesheet" href={% static 'css/tooltip.css' %}/>
+    <link rel="stylesheet" href={% static 'css/util.css' %}/>
+    <script type="text/javascript" src="{% static 'js/loader.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/another1.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/another2.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/another3.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/another4.js' %}"></script>-->
 
-    }
-  	.table-hover tbody tr:hover .radiant{
-  		background-color: #00DD00;!important
-  	}
-  	.table-hover tbody tr:hover .dire{
-  		background-color: #DD0000;!important
-  	}
-    </style>
-    <script type="text/javascript">
-    function onloadFunc(){
-      var matchString = sessionStorage.match;
-      var match = JSON.parse(matchString);
-      //post request to predictor
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST","predict", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(matchString)
-      xhr.onload = function(){
-        var response = xhr.responseText;
-        document.getElementById("prediction").innerHTML = JSON.stringify(response);
-      }
-      var htmlString = "";
-      if(match.scoreboard.duration < 120)
-      {
-        htmlString += "<h3>The match duration is less than 2 mins. Try again later.</h3>"
-      }else{
-        htmlString += "<h3>The match duration is " + (match.scoreboard.duration/60) + " mins</h3>";
-        htmlString += "<h3>The Score of Radiant:Dire is " + match.scoreboard.radiant.score + " : " + match.scoreboard.dire.score + "</h3>";
-        htmlString += "<h3>Networth of Radiant:Dire is ";
-        var netWorthRadiant = 0;
-        var netWorthDire = 0;
-        for(var i = 0;i < 5;i++){
-          netWorthRadiant += match.scoreboard.radiant.players[i].net_worth;
-          netWorthDire += match.scoreboard.dire.players[i].net_worth;
-        }
-        htmlString +=  netWorthRadiant + " : " + netWorthDire;
-      }
-
-        document.getElementById("match_details").innerHTML = htmlString  + "</h3>";
-    };
-    </script>
+    <script type="text/javascript" src ={% static 'js/prediction.js' %}></script>
   </head>
-  <body onload="onloadFunc()" class="body" style="background-color:#000000;color:#F5F5F5">
+  <body onload="onloadFunc();" class="body" style="background-color:#000000;color:#F5F5F5">
 
     <div class="container-fluid" style="min-height:95%; ">
 
-      <div class="row">
-        <div class = "col-sm-2">
-          <center>
-            <img src="{% static 'img/logo.jpg' %}" class="img-responsive" alt="Dota2 Logo">
-          </center>
-        </div>
-        <div class = "col-sm-10">
-          <center>
-            <h3>Dota 2 Predictor</h3>
-          </center>
-        </div>
+    <div class="row">
+      <div class = "col-sm-2">
+        <center>
+          <img src="{% static 'img/logo.jpg' %}" class="img-responsive" alt="Dota2 Logo">
+        </center>
+      </div>
+      <div class = "col-sm-10">
+        <center>
+          <h3>Dota 2 Predictor</h3>
+        </center>
+      </div>
+    </div>
+    </div>
+
+    <div class = "mycontainer" id = "match_prediction_details">
+        <table border = "0">
+          <tr id = "row_match_details">
+            <td>MatchID : <span id = "match_id"></span></td>
+            <td>Match Duration : <span id = "match_duration"></span></td>
+            <td>Net Worth <span class = "display_radiant">RADIANT</span> : <span class = "net_worth" id = "net_worth_radiant"></span></td>
+            <td>Net Worth <span class = "display_radiant">DIRE</span> : <span class = "net_worth" id = "net_worth_dire"></span></td>
+          </tr>
+          <tr id = "row_prediction_details">
+            <td>Predicted Winner : <span id = "prediction_team">Loading...</span></td>
+            <td><span class = "display_radiant">RADIANT</span> Win Chances : <span id = "prediction_probability_radiant">Loading...</span></td>
+            <td><span class = "display_dire">DIRE</span> Win Chances : <span id = "prediction_probability_dire">Loading...</span></td>
+            <td>Prediction Accuracy : <span id = "prediciton_accuracy">Loading...</span></td>
+          </tr>
+        </table>
       </div>
 
-      <div id = "match_details">
+    <br /><br />
+
+    <div class="container-fluid">
+      <div class = "mycontainer">
+        <div class = "pie-chart-wrapper" id = "pie-chart-wrapper">
+            <center><span class = "heading">Win Probablity of Radiant and Dire<span></center>
+          <div id="pie_chart" style="width: 100%; min-height: 500px;">
+          </div>
+        </div>
+      </div>
+      <div class = "col-sm-5">
+
+        <div class = "mycontainer" id = "scoreboard" background-color : "black">
+          <span class = "heading">SCORE</span>
+          <div class = "score-wrapper">
+            <div class = "radiant-score-wrapper">
+              <center id = "radiant-score"></center><center id = "score-radiant">RADIANT</center>
+            </div>
+            <div class = "dire-score-wrapper">
+              <center id = "dire-score"></center><center id = "score-dire">DIRE</center>
+            </div>
+          </div>
+        </div>
+
+        <div class = "mycontainer" id = "map-wrapper">
+          <span class = "heading">MAP</span>
+          <div class = "map">
+            <img src = {% static "img/dota_minimap.png" %}  id = "img"/>
+            <div class = "towers radiant" id = "towers-radiant">
+            </div>
+            <div class = "towers dire" id = "towers-dire">
+            </div>
+            <div class = "rax radiant" id = "rax-radiant">
+            </div>
+            <div class = "rax dire" id = "rax-dire">
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div id = "prediction">
+      <div class = "col-sm-7">
+
+        <div class = "mycontainer" id = "table-wrapper">
+        </div>
+
+      <!--  <div id = "match_details">
+        </div>
+
+        <div id = "prediction">
+        </div>-->
       </div>
+    </div>
+    <div></div>
+
+    <div class="mycontainer">
+      <div class = "mycontainer" id = "chart-wrapper">
+          <div id="chart" style="width: 100%; min-height: 500px;">
+          </div>
+          <div id = "perspective" class = "mycontainer">
+              <br /><br /><center><button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button></center><br /><br /><br />
+          </div>
+      </div>
+    </div>
 
     </div>
 
+    <script type="text/javascript" src = {% static 'js/displayscoreboard.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/drawmap.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/table.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/bargraph.js' %}></script>
+    </div>
   </body>
 </html>

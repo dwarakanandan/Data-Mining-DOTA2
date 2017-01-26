@@ -3,74 +3,14 @@
 
 <head>
 	<title>Dota 2 Games</title>
-	<meta http-equiv="refresh" content="10">
 	<meta charset="utf-8" />
+	<!--<meta http-equiv="refresh" content="20">-->
   {% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arsenal">
   <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
-	<!--<meta http-equiv="refresh" content="10">-->
-  <style type = "text/css">
-  .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #333333;
-  }
-  .radiant{
-    background-color: #00AA00;
-  }
-  .dire{
-    background-color: #AA0000;
-  }
-	.table-hover tbody tr td:hover {
-    background-color: #777777;
-
-  }
-	.table-hover tbody tr:hover .radiant{
-		background-color: #00DD00;!important
-	}
-	.table-hover tbody tr:hover .dire{
-		background-color: #DD0000;!important
-	}
-  </style>
-	<script type="text/javascript">
-	var matches;
-
-	function onBtnClick(matchIndex){
-		var match = matches[matchIndex];
-		sessionStorage.setItem('match',JSON.stringify(match));
-		window.location.href = "/prediction/";
-	};
-
-	function matchList(){
-			var counter = 1;
-			var userRequest = new  XMLHttpRequest();
-			userRequest.open("GET", "http://127.0.0.1:8000/livegames/livegames.json");
-			userRequest.onload = function(){
-			var response = userRequest.responseText;
-			var userData = JSON.parse(response);
-			//document.getElementById("temp").innerHTML = (response);
-			//console.log(userData);
-			matches = userData.result.games;
-			var htmlString = "";
-		  htmlString += '\n<table class="table table-hover">\n';
-		  htmlString += '<thead><tr><th>#</th><th>Match ID</th><th colspan=2>Score</th><th></th></thead><tbody>';
-		  for (i = 0;i < matches.length;i++)
-		  {
-		    try{
-		        if(matches[i].scoreboard){
-		          htmlString += '<tr><td>' + counter + '</td><td>' + matches[i].match_id + '</td>';
-		          htmlString += '<td class = "radiant">' + matches[i].scoreboard.radiant.score + '</td>';
-		          htmlString += '<td class = "dire">' + matches[i].scoreboard.dire.score + '</td>';
-		          htmlString += '<td><center><button onclick = "onBtnClick(' + i + ');"';
-							htmlString += ' type = "button" class = "btn btn-default">Predict Game</button></center></td></tr>';
-		          counter++;
-		        }
-		        }
-		        catch(e){console.log(i);}
-		  }
-		  htmlString += '</tbody>\n</table></h3>';
-			document.getElementById("temp").innerHTML = htmlString;
-			};
-			userRequest.send();
-		};
-	</script>
+	<link rel="stylesheet" href={% static 'css/livegames.css' %}/>
+	<script type = "text/javascript" src = {% static 'js/heroes.js' %}></script>
+	<script type = "text/javascript" src = {% static 'js/livegames.js' %}></script>
 </head>
 
 <body class="body" style="background-color:#000000;color:#F5F5F5">
@@ -91,21 +31,12 @@
         </center>
       </div>
     </div>
-      <!--<h2>The current live games are :</h2><h3>
-        <table class="table table-hover">
-          <tr><th>#</th><th>Match ID</th><th colspan=2>Score</th><th></th>
-          {% for m in matches %}
-            {% if m.scoreboard %}
-              <tr><td>{{forloop.counter}}</td><td>{{m.match_id}}</td><td class="radiant" align="right">{{m.scoreboard.radiant.score}}</td><td class="dire" align="left">{{m.scoreboard.dire.score}}</td>
-              <td align="center"> <a href = '/predictor/{{m.match_id}}'>
-							<button type="button" class="btn btn-outline-default waves-effect" title="Click to predict the outcome">Predict Game</button></a></td></tr>
-            {% endif %}
-          {% endfor %}
-        </table></h3>-->
-		<div id = "temp">
+		<div class = "container" id = "matchlist">
 			<script type="text/javascript">
 				matchList();
 			</script>
+		</div>
+		<div class = "timer-footer" id = "timer">
 		</div>
   </div>
 </body>

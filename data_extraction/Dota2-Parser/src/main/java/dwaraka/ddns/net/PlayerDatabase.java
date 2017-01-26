@@ -2,24 +2,27 @@ package dwaraka.ddns.net;
 
 import java.sql.*;
 import java.io.File;
+import java.util.ArrayList;
 
 class PlayerDatabase{
-	
+
 	Connection c;
-	
-	PlayerDatabase(){
+	String databaseName;
+
+	PlayerDatabase(String databaseName){
+		this.databaseName = databaseName;
 		try {
-			File file = new File("dota2.db");
+			File file = new File(databaseName);
 			Class.forName("org.sqlite.JDBC");
-			System.out.println("Checking for database file dota2.db...");
+			System.out.println("Checking for database file "+databaseName+"...");
 			if(file.exists())
-				c = DriverManager.getConnection("jdbc:sqlite:dota2.db");
+				c = DriverManager.getConnection("jdbc:sqlite:"+databaseName);
 			else{
-				c = DriverManager.getConnection("jdbc:sqlite:dota2.db");
+				c = DriverManager.getConnection("jdbc:sqlite:"+databaseName);
 				createDatabase();
 			}
 			c.setAutoCommit(false);
-			Statement stmt = c.createStatement();;
+			Statement stmt = c.createStatement();
 			stmt.executeUpdate("delete from match_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
 			stmt.executeUpdate("delete from player_data where match_id in (select match_id from player_data group by match_id having count(*)<30);");
 			stmt.close();
@@ -28,9 +31,9 @@ class PlayerDatabase{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		System.out.println("Opened database successfully");
+		System.out.println("Opened database "+databaseName+" successfully");
 	}
-	
+
 	public void closeConnection(){
 		try {
 			c.close();
@@ -38,9 +41,9 @@ class PlayerDatabase{
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
-		System.out.println("Database closed successfully");
+		System.out.println("Database "+databaseName+" close successfully");
 	}
-	
+
 	public void createDatabase(){
 		Statement stmt = null;
 		try {
@@ -76,24 +79,24 @@ class PlayerDatabase{
 			System.exit(0);
 		}
 	}
-	
+
 	public void insertPlayerData(String match_id,int time,String rawStatement){
 		Statement stmt = null;
 		try{
-			
+
 			stmt = c.createStatement();
 			String sql = "INSERT INTO PLAYER_DATA VALUES("
 									+ match_id +","+Integer.toString(time)+","
 									+ rawStatement + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.commit();
+			//c.commit();
 		}catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
 	}
-	
+
 	public void insertMatchData(String rawStatement){
 		Statement stmt = null;
 		try{
@@ -103,13 +106,23 @@ class PlayerDatabase{
 									+ rawStatement + ");";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			c.commit();
+			//c.commit();
 		}catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 		}
 	}
-	
+
+  public void performCommit(){
+    try{
+      c.commit();
+    }catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+  }
+
+	/*
 	public boolean exists(String match_id){
 		boolean rval = true;
 		Statement stmt = null;
@@ -126,28 +139,40 @@ class PlayerDatabase{
 		}
 		return rval;
 	}
-	
+	*/
+
+	public ArrayList<Long> getMatchIds(){
+		ArrayList<Long> matchIds = new ArrayList<Long>();
+		try{
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery( "SELECT * FROM MATCH_DATA");
+			while(rs.next())
+				matchIds.add(rs.getLong("MATCH_ID"));
+			stmt.close();
+		}catch ( Exception e ) {
+			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		}
+		return matchIds;
+	}
+
 	private String getCreateStatement(){
 		String createStatement = "";
 		for(int i=0;i<10;i++){
-			String partialCreateStatement = " PLAYER_"+Integer.toString(i)+"_AGILITY REAL," +
+			String partialCreateStatement =
 									 " PLAYER_"+Integer.toString(i)+"_ASSISTS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_CAMPS_STACKED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_DEATHS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_DENY_COUNT INT," +
 									 " PLAYER_"+Integer.toString(i)+"_HEALING REAL," +
-									 " PLAYER_"+Integer.toString(i)+"_INTELLECT REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_KILLS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_LAST_HIT_COUNT INT," +
 									 " PLAYER_"+Integer.toString(i)+"_LEVEL INT," +
-									 " PLAYER_"+Integer.toString(i)+"_MAX_HEALTH INT," +
-									 " PLAYER_"+Integer.toString(i)+"_MAX_MANA REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_NET_WORTH INT," +
 									 " PLAYER_"+Integer.toString(i)+"_OBSERVER_WARDS_PLACED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_ROSHAN_KILLS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_RUNE_PICKUPS INT," +
 									 " PLAYER_"+Integer.toString(i)+"_SENTRY_WARDS_PLACED INT," +
-									 " PLAYER_"+Integer.toString(i)+"_STRENGTH REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_STUN_DURATION REAL," +
 									 " PLAYER_"+Integer.toString(i)+"_TOTAL_GOLD_EARNED INT," +
 									 " PLAYER_"+Integer.toString(i)+"_TOTAL_XP_EARNED INT," +

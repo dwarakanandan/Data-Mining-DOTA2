@@ -31,7 +31,3 @@ def load(time_elapsed):
 		lables.append(getMatchOutcome(match_id,connection))
 	connection.close()
 	return np.array(features),np.array(lables)
-
-x,y = load(1)
-print x.shape
-print y.shape

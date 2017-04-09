@@ -1,5 +1,5 @@
 var match = JSON.parse(sessionStorage.match);
-google.charts.setOnLoadCallback(drawChart);
+//google.charts.setOnLoadCallback(drawChart);
 var toggleteamindividual = document.getElementById('toggleteamindividual');
 
 var netWorthRadiant2 = 0;
@@ -37,7 +37,7 @@ var options = {
 
  animation: {"startup": true, easing: 'out', duration: 1000,}
    };
-
+drawChart();
 //  google.charts.setOnLoadCallback(drawChart); <!-- setting callback -->
 function drawChart(){
 /* var data = google.visualization.arrayToDataTable([

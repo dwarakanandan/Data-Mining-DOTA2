@@ -34,9 +34,9 @@ function onBtnClick(matchIndex){
 
 function matchList(){
     var userRequest = new  XMLHttpRequest();
-    //userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
+    userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
     //userRequest.open("GET", "http://anibhat2004.ddns.net:8000/livegames/details.json");
-    userRequest.open("GET", "http://dwaraka.ddns.net:8000/livegames/details.json");
+    //userRequest.open("GET", "http://dwaraka.ddns.net:8000/livegames/details.json");
     userRequest.onload = function(){
     var heroesArray = new Array();
     var teams = ['radiant', 'dire'];     //Use it to reduce repetition of code in the for loop below

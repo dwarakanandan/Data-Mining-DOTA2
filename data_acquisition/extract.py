@@ -19,7 +19,7 @@ class myThread (threading.Thread):
 
 def extract(self,bz2file):
 	match_id = bz2file.split(".")[0]
-	zipfile = bz2.BZ2File("C:/Ani/Project/Beta/resources/replays/"+bz2file)
+	zipfile = bz2.BZ2File("../../resources/replays/"+bz2file)
 	try:
 		data = zipfile.read()
 		open("../../resources/replays_dem/"+match_id+".dem", 'wb').write(data)
@@ -34,7 +34,7 @@ def extract(self,bz2file):
 		#os.remove("../../resources/replays/"+bz2file)
 		os.remove("../../resources/match_details/"+match_id.split("_")[0]+".json")
 
-files = os.listdir("C:/Ani/Project/Beta/resources/replays")
+files = os.listdir("../../resources/replays")
 bz2files = []
 
 for f in files:

@@ -20,6 +20,21 @@
 						<name>Dwarakanandan.B.M</name>
 						<email>dwarakanandan.bm@gmail.com</email>
 				</developer>
+				<developer>
+						<id>anirudh</id>
+						<name>Anirudh.M.Bhat</name>
+						<email>anibhat2011@gmail.com</email>
+				</developer>
+				<developer>
+						<id>divyendu</id>
+						<name>Divyendu Dutta</name>
+						<email>duttadivyendu5@gmail.com</email>
+				</developer>
+				<developer>
+						<id>bhargav</id>
+						<name>Bhargav Chamala</name>
+						<email>bhargav1512@gmail.com</email>
+				</developer>
 		</developers>
 
 		<repositories>
@@ -58,7 +73,7 @@
 					<version>3.8.11.2</version>
 				</dependency>
 		</dependencies>
-		
+
 
 		<build>
 				<finalName>Dota2-Parser</finalName>

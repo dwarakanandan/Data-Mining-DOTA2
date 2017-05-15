@@ -46,6 +46,8 @@ def downloadFile(url,threadID):
 files =  os.listdir("../../resources/match_details")
 urls = []
 for f in files:
+	if "DS_Store" in f:
+		continue
 	match_id = f.split(".")[0]
 	json_obj = json.load(open("../../resources/match_details/"+f,"r"))
 	replay_salt =  json_obj['match']['replay_salt']

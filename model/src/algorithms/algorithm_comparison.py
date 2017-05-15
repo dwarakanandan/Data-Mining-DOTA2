@@ -68,7 +68,7 @@ if __name__ == '__main__':
 	features=18
 	if not os.path.exists("../../saves/algorithm_comparison"):
 		os.mkdir("../../saves/algorithm_comparison")
-	for i in range(1,16):
+	for i in range(1,31):
 		result = {'lr':{},'svm':{},'knn':{},'rf':{}}
 		print i
 		time=i

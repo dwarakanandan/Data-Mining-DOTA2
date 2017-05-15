@@ -20,35 +20,30 @@ function updateTimer(){
 }
 
 function getHeroURL(id) {
-  for(var p = (((id -2)<0) ? 0:(id - 2));p < tempHeroes.length;p++){
-    if(tempHeroes[p].id == id) return tempHeroes[p].url_small_portrait;
-  }
+  return tempHeroes[id].url_small_portrait;
 }
 
 function onBtnClick(matchIndex){
   var match = matches[matchIndex];
   sessionStorage.setItem('match',JSON.stringify(match));
-  sessionStorage.setItem('heroes',JSON.stringify(heroes));
+  sessionStorage.setItem('heroes',JSON.stringify(tempHeroes));
   window.location.href = "/prediction/";
 };
 
 function matchList(){
     var userRequest = new  XMLHttpRequest();
-    userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
-    //userRequest.open("GET", "http://anibhat2004.ddns.net:8000/livegames/details.json");
+    //userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
+    userRequest.open("GET", "http://anirudhbhat.ddns.net:8000/livegames/details.json");
     //userRequest.open("GET", "http://dwaraka.ddns.net:8000/livegames/details.json");
     userRequest.onload = function(){
     var heroesArray = new Array();
     var teams = ['radiant', 'dire'];     //Use it to reduce repetition of code in the for loop below
     var response = userRequest.responseText;
     var userData = JSON.parse(response);
-    tempHeroes = heroes.heroes;
+    tempHeroes = heroes_list;
 
     updateTimer();
 
-    tempHeroes.sort(function(a,b){      //Sort so that iteration in method getHeroURL can begin from id - 2 instead of 0
-      return a.id - b.id;
-    });
     matches = userData.livegames.result.games;
     matches.sort(function(a,b){
       return b.spectators - a.spectators;
@@ -73,23 +68,23 @@ function matchList(){
             }
 
             htmlString += '<div class = matchlist-wrapper onclick = "onBtnClick(' + i + ')">';
-            htmlString += '<div class = "row" id = "firstrow"><div class = "col-sm-4"><center>Radiant</center></div><div class = "col-sm-4" id = "matchid"><center>'+ matches[i].match_id +'</center></div><div class = "col-sm-4"><center>Dire</center></div></div>';
-            htmlString += '<div class = "row" id = "secondRow"><div class = "col-sm-4" id = "radiant-score"><center>';
-            htmlString += matches[i].scoreboard.radiant.score +'</center></div><div class = "col-sm-4" id = "matchduration"><center>';
+            htmlString += '<div class = "row" id = "firstrow"><div class = "col-xs-4"><center>Radiant</center></div><div class = "col-xs-4" id = "matchid"><center>'+ matches[i].match_id +'</center></div><div class = "col-xs-4"><center>Dire</center></div></div>';
+            htmlString += '<div class = "row" id = "secondRow"><div class = "col-xs-4" id = "radiant-score"><center>';
+            htmlString += matches[i].scoreboard.radiant.score +'</center></div><div class = "col-xs-4" id = "matchduration"><center>';
             htmlString += n(Math.floor(matches[i].scoreboard.duration/60)) + ":" + n(Math.floor(((matches[i].scoreboard.duration/60)%1) * 60));
-            htmlString += '</center></div><div class = "col-sm-4" id = "dire-score"><center>'+ matches[i].scoreboard.dire.score +'</center></div></div>';
-            htmlString += '<div class = "row" id = "thirdrow"><div class = "col-sm-6" id = "radiant-heroes"><center>';
+            htmlString += '</center></div><div class = "col-xs-4" id = "dire-score"><center>'+ matches[i].scoreboard.dire.score +'</center></div></div>';
+            htmlString += '<div class = "row" id = "thirdrow"><div class = "col-xs-5" id = "radiant-heroes"><center>';
               for(j = 0;j < matches[i].scoreboard.radiant.players.length;j++){
                 htmlString += '<img src = "'+ heroesArray[j] +'">';
               }
-            htmlString += '</center></div>';
-            htmlString += '<div class = "col-sm-6" id = "dire-heroes"><center>';
+            htmlString += '</center></div><div class = "col-xs-2"></div>';
+            htmlString += '<div class = "col-xs-5" id = "dire-heroes"><center>';
               for(j = 0;j < matches[i].scoreboard.dire.players.length;j++){
                 htmlString += '<img src = "'+ heroesArray[j+matches[i].scoreboard.radiant.players.length] +'">';
               }
             htmlString += '</center></div></div>';
 
-            htmlString += '<div class = "row" id = "fourthrow"><div class = "col-sm-12" id = "spectators"><center>'+ matches[i].spectators +' viewers watching</center></div></div>';
+            htmlString += '<div class = "row" id = "fourthrow"><div class = "col-xs-12" id = "spectators"><center>'+ matches[i].spectators +' viewers watching</center></div></div>';
             htmlString += '<div id = "overlay"></div></div>';
           }
           }

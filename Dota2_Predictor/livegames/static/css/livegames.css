@@ -2,6 +2,10 @@
   font-family: Arsenal;
 }
 
+body{
+  min-width: 835px; !important
+}
+
 .mycontainer{
 <<<<<<< HEAD
   width: 96%;
@@ -109,4 +113,23 @@ header{
   left: 0;
   z-index:5000;
   width : 100%;
+}
+
+@media (min-width : 768px) {
+
+}
+
+@media (min-width : 480px) {
+
+}
+
+
+@media (min-width : 320px) {
+
+}
+
+/*@media (max-width: 835px){
+  div[class^="col-sm-"], div[class*=" col-sm-"] {
+    width: 100%;
+}*/
 }

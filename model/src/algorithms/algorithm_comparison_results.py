@@ -22,7 +22,7 @@ def print_svm(svm,i):
     print ",    gamma: " + str(svm['best_estimator_.gamma'])
 
 
-for i in range(1,16):
+for i in range(1,31):
     result = pickle.load(open('../../saves/algorithm_comparison/'+str(i)+'.pkl','rb'))
     rf = result['rf']
     lr = result['lr']

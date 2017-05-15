@@ -17,3 +17,4 @@ while(True):
     except:
         print "An exception occurred please refresh"
         time.sleep(1)
+        subprocess.call("python update_livegames.py")

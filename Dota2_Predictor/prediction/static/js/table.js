@@ -1,27 +1,4 @@
-  var matchString = sessionStorage.match;
-  var match = JSON.parse(matchString);
-  var match_players = match.players;
-  var player_names = [];
-  var player_teams = [];
-  var teams = ['radiant', 'dire'];
-  var players = [];
   var order = {};
-
-  for(var i = 0;i < match_players.length;i++){
-    if(match_players[i].hero_id > 0){
-      player_names[match_players[i].hero_id] = match_players[i].name;
-      player_teams[match_players[i].hero_id] = match_players[i].team;
-    }
-  }
-
-  for(t = 0;t < teams.length;t++){
-    for(var i = 0;i < match.scoreboard[teams[t]].players.length;i++){
-      match.scoreboard[teams[t]].players[i].name = player_names[match.scoreboard[teams[t]].players[i].hero_id]
-      match.scoreboard[teams[t]].players[i].team = player_teams[match.scoreboard[teams[t]].players[i].hero_id]
-      players.push(match.scoreboard[teams[t]].players[i]);
-    }
-  }
-
 
   function players_sort(val){
     /*Case 1: when the previous sort was on a different column.

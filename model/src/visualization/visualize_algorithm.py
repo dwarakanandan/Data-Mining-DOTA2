@@ -5,7 +5,7 @@ import numpy as np
 def plot(algo,color):
 	x = []
 	y = []
-	for match_time in range(1,31):
+	for match_time in range(1,10):
 		result = pickle.load(open('../../saves/algorithm_comparison/'+str(match_time)+'.pkl','rb'))
 		x.append(match_time)
 		y.append(result[algo]['best_score'])

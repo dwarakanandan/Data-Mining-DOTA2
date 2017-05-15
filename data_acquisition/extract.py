@@ -3,7 +3,7 @@ import os
 import bz2
 import sys
 
-NUM_THREADS = 8
+NUM_THREADS = 4
 
 class myThread (threading.Thread):
 		def __init__(self, threadID,bz2List):
@@ -38,6 +38,8 @@ files = os.listdir("../../resources/replays")
 bz2files = []
 
 for f in files:
+	if "DS_Store" in f:
+		continue
 	match_id = f.split(".")[0]
 	if os.path.exists("../../resources/replays_dem/"+match_id+".dem") == False:
 		bz2files.append(f)

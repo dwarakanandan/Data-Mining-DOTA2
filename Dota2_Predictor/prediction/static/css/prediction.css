@@ -2,16 +2,23 @@
   font-family: Arsenal;
 }
 
+body{
+  min-width: 590px;
+}
+
 .mycontainer{
   width: 96%;
 }
 
+.mycontainer_table_2{
+  width:98%;
+}
 
 .net_worth{
   color: #FFD700;
 }
 .display_radiant{
-  color: green;
+  color: #00DD00;
 }
 .display_dire{
   color: red;
@@ -75,18 +82,20 @@
   -o-perspective: 200px;
   -moz-perspective: 200px;
 }
+
 #toggleteamindividual {
   display: none;
-  color: #DDDDDD;
-  background-color: #222222;
+  color: #222222!important;
+  background-color: #DDDDDD!important;
   transition-duration: 0.5s;
   -webkit-transition-duration: 0.5s;
   -o-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
 }
 #toggleteamindividual:hover{
-  background-color: #DDDDDD;
-  color: #222222;
+  background-position: 0 -10000px;
+  background-color: #222222!important;
+  color: #DDDDDD!important;
   box-shadow: 5px 5px 10px 2px #BBBBBB;
   -webkit-transform:translateZ(1.5px);
   -o-transform:translateZ(1.5px);
@@ -310,12 +319,14 @@
 
 .table-wrapper{
   max-width: 100%;
+  display: table-cell;
 }
 .table{
   background-color: #222222;
   width: 100%;
   padding: 1rem 1rem 1rem 1rem;
   margin: 1rem 1rem 1rem 1rem;
+  display: table;
 }
 table{
   width: 100%;

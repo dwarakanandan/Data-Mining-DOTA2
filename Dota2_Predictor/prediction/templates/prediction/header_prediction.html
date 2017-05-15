@@ -5,21 +5,51 @@
     <meta charset="utf-8">
     <title>Prediction</title>
     {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Arsenal|Bungee+Inline">
     <link rel="stylesheet" href={% static 'css/hero-icons/assets/stylesheets/dota2minimapheroes.css' %}>
-    <link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>
+    <!--<link rel="stylesheet" href={% static 'css/bootstrap.min.css' %}/>-->
+    <link rel="stylesheet" href={% static 'css/stats_table_2.css' %}/>
     <link rel="stylesheet" href={% static 'css/prediction.css' %}/>
-    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+    <script type="text/javascript">
+        var players = [];
+        var matchString = sessionStorage.match;
+        var match = JSON.parse(matchString);
+        var match_players = match.players;
+        var player_names = [];
+        var player_teams = [];
+        var teams = ['radiant', 'dire'];
+
+        for(var i = 0;i < match_players.length;i++){
+          if(match_players[i].hero_id > 0){
+            player_names[match_players[i].hero_id] = match_players[i].name;
+            player_teams[match_players[i].hero_id] = match_players[i].team;
+          }
+        }
+
+        for(t = 0;t < teams.length;t++){
+          for(var i = 0;i < match.scoreboard[teams[t]].players.length;i++){
+            match.scoreboard[teams[t]].players[i].name = player_names[match.scoreboard[teams[t]].players[i].hero_id]
+            match.scoreboard[teams[t]].players[i].team = player_teams[match.scoreboard[teams[t]].players[i].hero_id]
+            players.push(match.scoreboard[teams[t]].players[i]);
+          }
+        }
+
+    </script>
+    <script type="text/javascript" src={% static 'js/prediction.js' %}></script>
+    <script type="text/javascript" src={% static 'js/heroes.js' %}></script>
+    <script type="text/javascript" src={% static 'js/items.js' %}></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
-    <link rel="stylesheet" href={% static 'css/tooltip.css' %}/>
+    <!--<link rel="stylesheet" href={% static 'css/tooltip.css' %}/>
     <link rel="stylesheet" href={% static 'css/util.css' %}/>
     <script type="text/javascript" src="{% static 'js/loader.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/another1.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/another2.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/another3.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/another4.js' %}"></script>
-
-    <script type="text/javascript" src ={% static 'js/prediction.js' %}></script>
+    <script type="text/javascript" src="{% static 'js/another4.js' %}"></script>-->
   </head>
   <body onload="onloadFunc();" class="body" style="background-color:#000000;color:#F5F5F5">
 
@@ -126,8 +156,20 @@
           <div id="chart" style="width: 100%; min-height: 500px;">
           </div>
           <div id = "perspective" class = "mycontainer">
-              <br /><br /><center><button id = "toggleteamindividual" class = "btn btn-default" type = "button"></button></center><br /><br /><br />
+              <br /><br /><center><button id = "toggleteamindividual" class = "btn btn-default" style = "display: none;
+              color: #DDDDDD;
+              background-color: #222222;
+              transition-duration: 0.5s;
+              -webkit-transition-duration: 0.5s;
+              -o-transition-duration: 0.5s;
+              -moz-transition-duration: 0.5s;" type = "button"></button><br /><br /><br />
           </div>
+      </div>
+    </div>
+<!-- Table with items -->
+    <div class="container-fluid">
+      <div class="mycontainer_table_2" id = "stats_table_2">
+
       </div>
     </div>
 
@@ -137,6 +179,7 @@
     <script type="text/javascript" src = {% static 'js/drawmap.js' %}></script>
     <script type="text/javascript" src = {% static 'js/table.js' %}></script>
     <script type="text/javascript" src = {% static 'js/bargraph.js' %}></script>
+    <script type="text/javascript" src = {% static 'js/stats_table_2.js' %}></script>
     </div>
   </body>
 </html>

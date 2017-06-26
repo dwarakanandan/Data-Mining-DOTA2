@@ -27,5 +27,5 @@ for i in range(1,31):
 	subplot.scatter(x_d[:n_scatter,0],x_d[:n_scatter,1],color="b",label="dire_victory")
 
 fig.subplots_adjust(hspace=0.6)
-#plt.legend()
+plt.legend()
 plt.show()

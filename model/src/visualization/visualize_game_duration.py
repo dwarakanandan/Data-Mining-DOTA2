@@ -15,4 +15,3 @@ max = data[-1]
 bins = range(min,max)
 plt.hist(data,bins=200)
 plt.show()
-

@@ -32,8 +32,8 @@ function onBtnClick(matchIndex){
 
 function matchList(){
     var userRequest = new  XMLHttpRequest();
-    //userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
-    userRequest.open("GET", "http://anirudhbhat.ddns.net:8000/livegames/details.json");
+    userRequest.open("GET", "http://127.0.0.1:8000/livegames/details.json");
+    //userRequest.open("GET", "http://anirudhbhat.ddns.net:8000/livegames/details.json");
     //userRequest.open("GET", "http://dwaraka.ddns.net:8000/livegames/details.json");
     userRequest.onload = function(){
     var heroesArray = new Array();
